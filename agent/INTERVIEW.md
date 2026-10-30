@@ -1,36 +1,40 @@
 # Interview: Kontext für künftige Agents
 
-Ziel: Jeder Agent, der später in einem Vault arbeitet, weiß aus dessen `CLAUDE.md`, für wen er arbeitet, wofür der Vault da ist und wobei er helfen soll. Führe ein kurzes, freundliches Interview: eine Frage pro Nachricht, kurz, mit einem Beispiel als Hilfe. Übernimm die Antworten in den Worten der Person. „Möchte ich nicht sagen“ ist eine gültige Antwort – dann bleibt der Punkt leer.
+Ziel: Jeder Agent, der später im Vault arbeitet, weiß aus `Profil.md`, für wen er arbeitet, was die Person studiert, welche Vorgaben gelten und wobei er helfen soll. `CLAUDE.md` bindet `Profil.md` über `@Profil.md` in jeden Chat ein.
 
-Halte das Profil schlank: Name, Studium, Zweck, Wünsche. Adresse, Matrikelnummer, Noten und Ähnliches gehören nicht hinein.
+Führe ein kurzes, freundliches Interview: eine Frage pro Nachricht, mit einem Beispiel als Hilfe. Übernimm die Antworten in den Worten der Person. „Möchte ich nicht sagen“ ist eine gültige Antwort – dann bleibt die Zeile leer. Halte das Profil schlank: Adresse, Matrikelnummer, Noten und Ähnliches gehören nicht hinein.
 
 ## Fragen
 
 Einmal pro Person:
 
-1. Wie heißt du, und wie sollen Agents dich ansprechen? (z. B. „Lea, du“)
-2. Was studierst du, wo, in welchem Semester? (z. B. „Architektur, TU München, 5. Semester“)
-3. In welcher Sprache sollen Agents antworten?
+1. Wie heißt du, und wie soll Claude dich ansprechen? (z. B. „Lea, du“)
+2. Was studierst du, wo und im wievielten Semester? (z. B. „Stadtplanung B.Sc., TH Lübeck, 3. Semester“)
+3. Hast du einen Link zum Studienverlauf oder Modulhandbuch deines Studiengangs? (z. B. die Seite „Studienverlauf“ auf der Website deiner Hochschule)
+4. In welcher Sprache soll Claude antworten?
+5. Welche Module und Projekte hast du dieses Semester? (z. B. „Stadt Land Projekt, Verkehrsplanung, Wohn- und Stadtsoziologie“) – Hast du den Studienverlauf schon geladen (Frage 3), schlag die Module des genannten Semesters vor und lass die Person korrigieren.
+6. Mit welchen Programmen arbeitest du im Studium? (z. B. QGIS, AutoCAD, Excel, Zotero, InDesign)
+7. Gibt es Vorgaben deiner Lehrenden für Abgaben – Zitierstil, Vorlage der Hochschule, Regeln zum Einsatz von KI?
+8. Wie lernst du am liebsten? (z. B. „kurze Erklärungen mit Beispielen“, „Übungsfragen“, „Skizzen und Karten“)
+9. Wobei soll Claude dir helfen – und was machst du lieber selbst? (z. B. „Feedback auf meine Texte, aber schreiben will ich selbst“)
 
 Für jeden eingerichteten Vault:
 
-4. Wofür nutzt du diesen Vault? (z. B. Entwurfsprojekt, Seminar, Thesis, Privates)
-5. Woran arbeitest du darin gerade – gibt es eine Abgabe oder einen Termin?
-6. Wobei soll dir ein Agent hier am meisten helfen – und was erledigst du lieber selbst?
+10. Wofür nutzt du diesen Vault? (z. B. „alles fürs Studium“, „nur Bachelorarbeit“)
+11. Woran arbeitest du gerade, und gibt es Abgaben oder Termine?
+
+## Studienverlauf laden (nach Frage 3)
+
+Gibt die Person einen Link, lies die Seite (bei Reitern oder PDF-Modulhandbüchern auch die verlinkten Teile) und leg im Vault die Notiz `Studium/Studienverlauf.md` an:
+
+- Studiengang, Quelle (Link) und Abrufdatum oben,
+- je Semester die Module mit Leistungspunkten, Projekte, Praxisphase und Abschlussarbeit – nur, was auf der Seite steht,
+- Hinweise der Seite selbst (z. B. „wird aktualisiert“, gültige Prüfungsordnung).
+
+Sag der Person in zwei Sätzen, was du gefunden hast. Ohne Link: frag, ob du die Seite suchen sollst; findest du sie nicht sicher, lass den Punkt leer.
 
 ## Ergebnis
 
-Ersetze in der `CLAUDE.md` des Vaults die `%% … %%`-Zeile unter `## Über diesen Vault` durch:
+Füll `Profil.md` (Abschnitte Person, Studium, Vorgaben für Abgaben, Zusammenarbeit mit Claude, Dieser Vault) mit den Antworten und trag bei „Studienverlauf“ den Link und `[[Studienverlauf]]` ein. Zeig das fertige Profil vor dem Schreiben und schreib erst nach dem OK. Sag dazu, dass `Profil.md` eine normale Notiz ist, die sie jederzeit ändern kann – etwa zu Semesterbeginn.
 
-```markdown
-- **Person:** <Name>, Ansprache: <du/Sie>. <Studium, Hochschule, Semester>.
-- **Sprache:** <Sprache>.
-- **Zweck:** <Antwort 4>
-- **Aktuell:** <Antwort 5, mit Datum, falls genannt>
-- **Hilfe erwünscht bei:** <Antwort 6, erster Teil>
-- **Macht die Person selbst:** <Antwort 6, zweiter Teil>
-```
-
-Zeig den fertigen Abschnitt vor dem Schreiben und schreib erst nach dem OK. Sag dazu, dass `CLAUDE.md` eine normale Notiz ist, die sie jederzeit in Obsidian ändern kann – etwa, wenn ein neues Projekt beginnt.
-
-**Fertig, wenn:** jede eingerichtete `CLAUDE.md` den bestätigten Abschnitt enthält.
+**Fertig, wenn:** `Profil.md` die bestätigten Antworten enthält, `Studium/Studienverlauf.md` existiert (sofern ein Link da war) und `CLAUDE.md` die Zeile `@Profil.md` enthält.

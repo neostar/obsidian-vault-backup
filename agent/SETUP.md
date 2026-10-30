@@ -93,7 +93,7 @@ Dann für jeden Vault `bash "PKG/vault-setup.sh" "<neuer Pfad>"`. Das Skript öf
 
 Lies `PKG/agent/INTERVIEW.md` und führe es durch.
 
-**Fertig, wenn:** jede eingerichtete `CLAUDE.md` einen von der Person bestätigten Abschnitt „Über diesen Vault“ hat.
+**Fertig, wenn:** jede eingerichtete `Profil.md` die von der Person bestätigten Antworten enthält und `Studium/Studienverlauf.md` angelegt ist, sofern sie einen Link zum Studienverlauf hatte.
 
 ### 9. Google Drive
 
@@ -110,7 +110,7 @@ Gib dann eine kurze Zusammenfassung in Alltagssprache:
 - **Ab jetzt im neuen Vault arbeiten:** das Obsidian-Fenster von `~/Obsidian Vaults/<Name>` nutzen und dort einen neuen Claude-Chat beginnen – dieser Chat läuft noch im alten Vault.
 - Was automatisch passiert: Versionen alle 10 Minuten, Backup stündlich, Google Drive lädt hoch, Werkzeuge aktualisieren sich täglich.
 - Erscheint „Obsidian-Backup fehlgeschlagen“: Bildschirmfoto an Claude.
-- **Zum Weiterlesen:** die Notiz „Mit Claude arbeiten“ im Vault – was Claude kann und wie die Skills `teach`, `grill-with-docs`, `wayfinder`, `prototype` und `retro` beim Lernen, bei Entwürfen und bei der Abschlussarbeit helfen. Schlag vor, sie gemeinsam kurz anzuschauen, und nenne einen Skill, der zu dem passt, was die Person im Interview über ihren Vault erzählt hat.
+- **Zum Weiterlesen:** die Notiz „Mit Claude arbeiten“ im Vault – was Claude kann und wie die Skills `teach`, `grill-with-docs`, `wayfinder`, `prototype` und `retro` beim Lernen, bei Entwürfen und bei der Abschlussarbeit helfen. Schlag vor, sie gemeinsam kurz anzuschauen, und nenne einen Skill, der zu dem passt, was die Person im Interview über ihr Semester und ihren Vault erzählt hat.
 - Neuer Vault: in `~/Obsidian Vaults` anlegen und Claude bitten, ihn einzurichten.
 - Den alten Vault erst nach ein paar Tagen löschen: in Obsidian „Vaults verwalten → Aus Liste entfernen“, dann im Finder in den Papierkorb.
 

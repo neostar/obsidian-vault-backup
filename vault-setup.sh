@@ -3,7 +3,7 @@
 # Richtet einen Vault in Obsidian ein – über die Obsidian CLI:
 #   Community-Plugins (inkl. Claudian) installieren + aktivieren, Git-Plugin auf „nur Commit“,
 #   Anhänge-Ordner „Attachments“, Agent-Vorlagen (CLAUDE.md, docs/agents/,
-#   „Mit Claude arbeiten.md“), Symbole für Ordner und Notizen (Iconic).
+#   „Mit Claude arbeiten.md“, Profil.md), Symbole für Ordner und Notizen (Iconic).
 # Verwendung:  ./vault-setup.sh "/Pfad/zum/Vault"
 # Voraussetzung: Obsidian läuft, CLI ist aktiviert (Einstellungen → Allgemein).
 # Kann gefahrlos erneut ausgeführt werden; Vorhandenes wird nicht überschrieben.
@@ -223,10 +223,16 @@ tpl, dst = open(sys.argv[1], encoding="utf-8").read(), sys.argv[2]
 cur = open(dst, encoding="utf-8").read()
 pat = re.compile(r"%% obsidian-vault-setup: Anfang.*?%% obsidian-vault-setup: Ende %%\n?", re.S)
 block = pat.search(tpl).group(0)
+# Abschnitt mit dem Profil-Import, falls er fehlt (Import nur ohne Leerzeichen/
+# Umlaut im Dateinamen zuverlässig – daher Profil.md). Ein alter, leerer Abschnitt
+# „Über diesen Vault“ (frühere Vorlage) wird dabei ersetzt.
+extra = "" if "@Profil.md" in cur else tpl[tpl.index("## Über die Person"):pat.search(tpl).start()]
+old = re.compile(r"## Über diesen Vault\n\n%%[^\n]*%%\n\n?")
+if extra and old.search(cur):
+    cur, extra = old.sub(lambda m: extra, cur, count=1), ""
 if pat.search(cur):
-    new = pat.sub(lambda m: block, cur, count=1)
+    new = pat.sub(lambda m: extra + block, cur, count=1)
 else:
-    extra = "" if "## Über diesen Vault" in cur else tpl[tpl.index("## Über diesen Vault"):pat.search(tpl).start()]
     new = cur.rstrip("\n") + "\n\n" + extra + block
 if new != cur:
     open(dst, "w", encoding="utf-8").write(new)
@@ -270,7 +276,8 @@ set_icons() {
     const want = [['Attachments','lucide-paperclip','blue'], ['Excalidraw','lucide-pencil-ruler','green'],
       ['Planung','lucide-map','red'], ['Lernen','lucide-book-open','cyan'],
       ['docs','lucide-bot','purple'], ['CLAUDE.md','lucide-sparkles','orange'],
-      ['Mit Claude arbeiten.md','lucide-graduation-cap','orange']];
+      ['Mit Claude arbeiten.md','lucide-graduation-cap','orange'], ['Profil.md','lucide-user','pink'],
+      ['Studium','lucide-school','cyan']];
     const set = [];
     for (const [p, i, c] of want) {
       if (app.vault.getAbstractFileByPath(p) && !ic.settings.fileIcons[p]) { ic.settings.fileIcons[p] = {icon: i, color: c}; set.push(p); }

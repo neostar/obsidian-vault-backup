@@ -1,8 +1,8 @@
 # {{VAULT_NAME}}
 
-## Über diesen Vault
+## Über die Person
 
-%% Wird beim Einrichten im Interview ausgefüllt: Person, Studium, Zweck des Vaults, Wünsche an Agents. %%
+@Profil.md
 
 %% obsidian-vault-setup: Anfang – dieser Block wird bei jedem Setup-Lauf erneuert; eigene Ergänzungen bitte darüber oder darunter %%
 
@@ -16,6 +16,7 @@
 - **Verschieben und Umbenennen** über die Obsidian CLI, damit Obsidian die Links mitzieht – aus diesem Ordner: `/Applications/Obsidian.app/Contents/MacOS/obsidian move path="alt.md" to="neu.md"`.
 - **Dateien bearbeiten** (Tabellen, Karten und Geodaten, Bilder, PDF, Pläne, Layout, Video): lies zuerst `~/Library/Application Support/obsidian-vault-setup/agent/WERKZEUGE.md`. Originale bleiben unberührt; Python immer über `uv run` / `uvx`, nie `pip install`.
 - **Skills** – die Person kennt sie aus [[Mit Claude arbeiten]]; schlag einen passenden mit vollem Befehl vor (z. B. `/mattpocock-skills:teach`):
+  - Studium im Blick: Module und Semester stehen in `Studium/Studienverlauf.md` – nutze sie, um Beispiele und Lernstoff am Studienplan auszurichten.
   - `teach`: Arbeitsordner ist `Lernen/<Thema>/` – alle Lern-Dateien (Mission, Quellen, Lektionen, Glossar) dort, nicht im Vault-Root; Lektionen öffnet die Person per Klick im Browser. Vorlesungsmaterial aus dem Vault ist die erste und maßgebliche Quelle: als Erstes in `RESOURCES.md` eintragen, Lektionen und Übungen daraus ableiten, die Begriffe der Vorlesung verwenden. Ergänzungen aus anderen Quellen als solche kennzeichnen; widerspricht etwas dem Material, die Abweichung benennen.
   - `prototype`: eine einzelne HTML-Datei in `Planung/Prototypen/`, per Doppelklick im Browser zu öffnen.
   - `retro`: Vorschläge auf Hinweise in dieser `CLAUDE.md` und auf Arbeitsweisen beschränken, in Alltagssprache.

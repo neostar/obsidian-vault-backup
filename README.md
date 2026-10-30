@@ -8,7 +8,7 @@ Gedacht für Architektur-Studierende auf dem Mac.
 
 - **Nichts geht verloren.** Jede Änderung an deinen Notizen wird alle 10 Minuten festgehalten (Git), und jede Stunde landet eine Kopie deines Vaults in `~/Obsidian-Backup` – Google Drive lädt sie hoch. Gelöschte Dateien bleiben 90 Tage im Backup.
 - **Alles bleibt auf deinem Mac.** Dein Vault liegt in `~/Obsidian Vaults/` und funktioniert auch ohne Internet.
-- **Claude kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst und wofür der Vault da ist. Das steht danach in der Datei `CLAUDE.md` – jede künftige Unterhaltung mit Claude startet mit diesem Wissen.
+- **Claude kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst, welche Vorgaben für Abgaben gelten und wofür der Vault da ist; aus dem Link zu deinem Studienverlauf holt Claude die Module aller Semester. Das steht danach in der Notiz `Profil` – jede künftige Unterhaltung mit Claude startet mit diesem Wissen.
 - **Werkzeuge für deine Dateien.** Claude kann Karten und Geodaten aufbereiten (OpenStreetMap, Shapefile, GeoPackage für QGIS), Tabellen und CSV-Dateien auswerten, Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Hausarbeiten mit Literaturverzeichnis als Word oder PDF ausgeben (pandoc), Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
 - **Lernen, planen, ausprobieren mit Claude.** Die Notiz **„Mit Claude arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
 - **Ordnung bei Anhängen.** Jede Notiz bekommt ihren eigenen Anhänge-Ordner, eingefügte Bilder heißen wie die Notiz, und beim Umbenennen oder Verschieben ziehen sie mit. Alte, lose Dateien räumt Claude auf Zuruf auf.
@@ -59,7 +59,7 @@ Der Agent arbeitet [`agent/SETUP.md`](agent/SETUP.md) ab; das Interview steht in
 | `install.sh` | Git in jedem Vault unter `~/Obsidian Vaults` + stündlicher Backup-Job |
 | `backup.sh` | das Backup selbst (läuft über launchd) |
 | `vault-setup.sh` | Obsidian-Plugins und -Einstellungen pro Vault, über die Obsidian CLI |
-| `vault-template/` | `CLAUDE.md`, `docs/agents/` und die Einführung „Mit Claude arbeiten“ für jeden Vault |
+| `vault-template/` | `CLAUDE.md`, `Profil.md`, `docs/agents/` und die Einführung „Mit Claude arbeiten“ für jeden Vault |
 | `gitignore.template` | hält Bilder, PDFs, CAD-Dateien, Plugin-Code und Chat-Daten aus Git heraus |
 | `uninstall.sh` | entfernt den Backup-Job; Vaults und Backups bleiben |
 
