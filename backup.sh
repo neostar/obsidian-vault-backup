@@ -34,7 +34,7 @@ alert() {
 }
 
 # Am Ende jedes Fehlerdialogs: Log-Pfad + Hinweis, wie man Hilfe bekommt
-DETAILS="Details: ~/Library/Logs/obsidian-vault-backup.log"$'\n\n'"So bekommst du Hilfe: Mach ein Bildschirmfoto dieses Fensters (⇧⌘4, dann Leertaste und auf das Fenster klicken) und gib es Claude (Claudian in Obsidian) mit der Bitte, den Fehler zu prüfen."
+DETAILS="Details: ~/Library/Logs/obsidian-vault-backup.log"$'\n\n'"So bekommst du Hilfe: Mach ein Bildschirmfoto dieses Fensters (⇧⌘4, dann Leertaste und auf das Fenster klicken) und gib es deinem KI-Agent (Claudian in Obsidian) mit der Bitte, den Fehler zu prüfen."
 
 fail() {
   log "FEHLER: $1"
@@ -122,7 +122,7 @@ backup_vault() {
     # Vault ohne Git: Dateien sind gesichert, Historie fehlt. Höchstens einmal
     # pro Tag melden; die Markierung setzt erst der gezeigte Dialog (unten).
     log "HINWEIS $name: kein Git – install.sh erneut ausführen"
-    HINTS+=("Vault ohne Git: $name – bitte install.sh erneut ausführen (oder Claude darum bitten).")
+    HINTS+=("Vault ohne Git: $name – bitte install.sh erneut ausführen (oder den KI-Agent darum bitten).")
     HINT_MARKS+=("$dest/.hinweis-ohne-git")
   fi
 

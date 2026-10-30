@@ -1,6 +1,6 @@
-# Prompt für Claude
+# Prompt für den KI-Agent
 
-> Den Text zwischen den Linien kopieren und in Claude (Claudian in Obsidian) einfügen.
+> Den Text zwischen den Linien kopieren und in den Chat deines Agents einfügen – Claude oder Codex, in Obsidian über Claudian.
 
 ---
 

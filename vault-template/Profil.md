@@ -4,7 +4,7 @@ tags:
 ---
 # Über mich
 
-%% Claude liest diese Notiz zu Beginn jedes Chats (über [[CLAUDE]]). Ausgefüllt im Einrichtungs-Interview – ändere sie jederzeit, z. B. zu Semesterbeginn. %%
+%% Dein KI-Agent liest diese Notiz zu Beginn jedes Chats (Hinweis in [[AGENTS]]). Ausgefüllt im Einrichtungs-Interview – ändere sie jederzeit, z. B. zu Semesterbeginn. %%
 
 ## Person
 
@@ -23,7 +23,7 @@ tags:
 - **Zitierstil / Vorlage:**
 - **Regeln zum Einsatz von KI:**
 
-## Zusammenarbeit mit Claude
+## Zusammenarbeit mit dem Agent
 
 - **So lerne ich am liebsten:**
 - **Hilf mir bei:**

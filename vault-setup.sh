@@ -2,8 +2,8 @@
 # shellcheck disable=SC1111  # deutsche Anführungszeichen „…“ sind gewollt
 # Richtet einen Vault in Obsidian ein – über die Obsidian CLI:
 #   Community-Plugins (inkl. Claudian) installieren + aktivieren, Git-Plugin auf „nur Commit“,
-#   Anhänge-Ordner „Attachments“, Agent-Vorlagen (CLAUDE.md, docs/agents/,
-#   „Mit Claude arbeiten.md“, Profil.md), Symbole für Ordner und Notizen (Iconic).
+#   Anhänge-Ordner „Attachments“, Agent-Vorlagen (AGENTS.md + CLAUDE.md, docs/agents/,
+#   „Mit KI-Agenten arbeiten.md“, Profil.md), Symbole für Ordner und Notizen (Iconic).
 # Verwendung:  ./vault-setup.sh "/Pfad/zum/Vault"
 # Voraussetzung: Obsidian läuft, CLI ist aktiviert (Einstellungen → Allgemein).
 # Kann gefahrlos erneut ausgeführt werden; Vorhandenes wird nicht überschrieben.
@@ -160,7 +160,7 @@ js "app.vault.getAbstractFileByPath('Attachments') ? 'da' : (app.vault.createFol
 js "(app.vault.setConfig('showUnsupportedFiles', true), 'ok')"
 
 # --- Agent-Vorlagen ----------------------------------------------------------------
-# Fehlende Dateien anlegen, Vorhandenes behalten. In CLAUDE.md gehört uns nur der
+# Fehlende Dateien anlegen, Vorhandenes behalten. In AGENTS.md gehört uns nur der
 # Block zwischen den Markierungen „obsidian-vault-setup: Anfang/Ende“: Er wird bei
 # jedem Lauf erneuert. Fehlt er, wird er angehängt; der Rest gehört der Person.
 # Platzhalter: Name, Pfad und Backup-Ordner dieses Macs (aus der Backup-Config)
@@ -177,47 +177,74 @@ render() {
   /usr/bin/sed -e "s|{{VAULT_NAME}}|$E_NAME|g" -e "s|{{VAULT_PATH}}|$E_PATH|g" \
     -e "s|{{BACKUP_ROOT}}|$E_BACKUP|g" "$1"
 }
-# claude_md <Vorlage> <Ziel> – verwalteten Block ersetzen oder anhängen
-claude_md() {
-  /usr/bin/python3 -I - "$1" "$2" <<'PYEOF'
-import sys, re
-tpl, dst = open(sys.argv[1], encoding="utf-8").read(), sys.argv[2]
-cur = open(dst, encoding="utf-8").read()
+# agent_docs <AGENTS-Vorlage> <CLAUDE-Vorlage> <Vault> – Anweisungen für alle Agents
+# in AGENTS.md (Codex liest nur diese); CLAUDE.md bindet sie per @AGENTS.md für
+# Claude Code ein. Ausgabe: eine Zeile je Änderung.
+agent_docs() {
+  /usr/bin/python3 -I - "$1" "$2" "$3" <<'PYEOF'
+import os, re, sys
+tpl_a, tpl_c = (open(p, encoding="utf-8").read() for p in sys.argv[1:3])
+pa, pc = (os.path.join(sys.argv[3], f) for f in ("AGENTS.md", "CLAUDE.md"))
 pat = re.compile(r"%% obsidian-vault-setup: Anfang.*?%% obsidian-vault-setup: Ende %%\n?", re.S)
-block = pat.search(tpl).group(0)
-# Abschnitt mit dem Profil-Import, falls er fehlt (Import nur ohne Leerzeichen/
-# Umlaut im Dateinamen zuverlässig – daher Profil.md). Ein alter, leerer Abschnitt
-# „Über diesen Vault“ (frühere Vorlage) wird dabei ersetzt.
-extra = "" if "@Profil.md" in cur else tpl[tpl.index("## Über die Person"):pat.search(tpl).start()]
-old = re.compile(r"## Über diesen Vault\n\n%%[^\n]*%%\n\n?")
-if extra and old.search(cur):
-    cur, extra = old.sub(lambda m: extra, cur, count=1), ""
-if pat.search(cur):
-    new = pat.sub(lambda m: extra + block, cur, count=1)
-else:
-    new = cur.rstrip("\n") + "\n\n" + extra + block
-if new != cur:
-    open(dst, "w", encoding="utf-8").write(new)
-    print("geändert")
+block = pat.search(tpl_a).group(0)
+intro = tpl_a[tpl_a.index("## Über die Person"):pat.search(tpl_a).start()]
+
+def update(path, tpl, change, msg_new, msg_changed):
+    if not os.path.exists(path):
+        open(path, "w", encoding="utf-8").write(tpl)
+        print(msg_new)
+        return
+    cur = open(path, encoding="utf-8").read()
+    new = change(cur)
+    if new != cur:
+        open(path, "w", encoding="utf-8").write(new)
+        print(msg_changed)
+
+# AGENTS.md: verwalteten Block erneuern oder anhängen (mit Profil-Hinweis, falls er fehlt)
+def agents(cur):
+    extra = "" if "Profil.md" in pat.sub("", cur) else intro
+    if pat.search(cur):
+        return pat.sub(lambda m: extra + block, cur, count=1)
+    return cur.rstrip("\n") + "\n\n" + extra + block
+
+# CLAUDE.md der Person: nur die Verweise ergänzen
+def claude(cur):
+    new = cur
+    if "@AGENTS.md" not in new:
+        m = re.match(r"# [^\n]*\n\n?", new)
+        at = m.end() if m else 0
+        new = new[:at] + "@AGENTS.md\n\n" + new[at:]
+    if "@Profil.md" not in new:
+        new = new.rstrip("\n") + "\n\n@Profil.md\n"
+    return new
+
+update(pa, tpl_a, agents, "AGENTS.md angelegt", "AGENTS.md: Setup-Abschnitt aktualisiert (eigener Inhalt bleibt)")
+update(pc, tpl_c, claude, "CLAUDE.md angelegt (verweist auf AGENTS.md)", "CLAUDE.md: Verweis auf AGENTS.md ergänzt")
 PYEOF
 }
 copied=0
 while IFS= read -r -d '' src; do
   rel="${src#"$HERE/vault-template/"}"
   dst="$VAULT/$rel"
+  case "$rel" in
+    AGENTS.md | CLAUDE.md) continue ;;   # eigene Behandlung, siehe unten
+    *) ;;
+  esac
   if [[ ! -e "$dst" ]]; then
     mkdir -p "$(dirname "$dst")"
     render "$src" >"$dst"
     copied=$((copied + 1))
-  elif [[ "$rel" == "CLAUDE.md" ]]; then
-    RENDERED="$(mktemp)"
-    render "$src" >"$RENDERED"
-    # shellcheck disable=SC2310
-    CHANGED="$(claude_md "$RENDERED" "$dst")" || die "CLAUDE.md konnte nicht aktualisiert werden"
-    rm -f "$RENDERED"
-    [[ -z "$CHANGED" ]] || ok "CLAUDE.md: Setup-Abschnitt aktualisiert (eigener Inhalt bleibt)"
   fi
 done < <(find "$HERE/vault-template" -type f -not -name .DS_Store -print0 || true)
+RA="$(mktemp)"; RC="$(mktemp)"
+render "$HERE/vault-template/AGENTS.md" >"$RA"
+render "$HERE/vault-template/CLAUDE.md" >"$RC"
+# shellcheck disable=SC2310
+DOCS="$(agent_docs "$RA" "$RC" "$VAULT")" || die "AGENTS.md/CLAUDE.md konnten nicht aktualisiert werden"
+rm -f "$RA" "$RC"
+while IFS= read -r line; do
+  [[ -z "$line" ]] || ok "$line"
+done <<<"$DOCS"
 if ((copied > 0)); then
   ok "Agent-Vorlagen angelegt ($copied Dateien)"
 else
@@ -248,7 +275,8 @@ ok "Studium: Vorlagen in „$R“ (⌘P → Vorlage einfügen), Übersicht Studi
 ICONS=()
 for e in "Attachments=lucide-paperclip=blue" "Excalidraw=lucide-pencil-ruler=green" \
   "Planung=lucide-map=red" "Lernen=lucide-book-open=cyan" "docs=lucide-bot=purple" \
-  "CLAUDE.md=lucide-sparkles=orange" "Mit Claude arbeiten.md=lucide-graduation-cap=orange" \
+  "AGENTS.md=lucide-sparkles=orange" "CLAUDE.md=lucide-link=gray" \
+  "Mit KI-Agenten arbeiten.md=lucide-graduation-cap=orange" \
   "Profil.md=lucide-user=pink" "Studium=lucide-school=cyan" "Studium/Module=lucide-library=cyan" \
   "Vorlagen=lucide-layout-template=gray"; do
   p="${e%%=*}"

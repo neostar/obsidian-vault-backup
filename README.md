@@ -1,6 +1,6 @@
 # Obsidian Vault Setup
 
-Dein Obsidian-Vault – versioniert, gesichert und bereit für die Arbeit mit Claude. Ein KI-Agent richtet alles ein; du beantwortest ein paar Fragen und klickst an zwei Stellen.
+Dein Obsidian-Vault – versioniert, gesichert und bereit für die Arbeit mit einem KI-Agent – Claude oder Codex. Der Agent richtet alles ein; du beantwortest ein paar Fragen und klickst an zwei Stellen.
 
 Gedacht für Architektur-Studierende auf dem Mac.
 
@@ -8,21 +8,21 @@ Gedacht für Architektur-Studierende auf dem Mac.
 
 - **Nichts geht verloren.** Jede Änderung an deinen Notizen wird alle 10 Minuten festgehalten (Git), und jede Stunde landet eine Kopie deines Vaults in `~/Obsidian-Backup` – Google Drive lädt sie hoch. Gelöschte Dateien bleiben 90 Tage im Backup.
 - **Alles bleibt auf deinem Mac.** Dein Vault liegt in `~/Obsidian Vaults/` und funktioniert auch ohne Internet.
-- **Claude kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst, welche Vorgaben für Abgaben gelten und wofür der Vault da ist; aus dem Link zu deinem Studienverlauf holt Claude die Module aller Semester. Das steht danach in der Notiz `Profil` – jede künftige Unterhaltung mit Claude startet mit diesem Wissen.
-- **Werkzeuge für deine Dateien.** Claude kann Karten und Geodaten aufbereiten (OpenStreetMap, Shapefile, GeoPackage für QGIS), Tabellen und CSV-Dateien auswerten, Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Hausarbeiten mit Literaturverzeichnis als Word oder PDF ausgeben (pandoc), Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
+- **Dein Agent kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst, welche Vorgaben für Abgaben gelten und wofür der Vault da ist; aus dem Link zu deinem Studienverlauf holt er die Module aller Semester. Das steht danach in der Notiz `Profil` – jede künftige Unterhaltung startet mit diesem Wissen.
+- **Werkzeuge für deine Dateien.** Der Agent kann Karten und Geodaten aufbereiten (OpenStreetMap, Shapefile, GeoPackage für QGIS), Tabellen und CSV-Dateien auswerten, Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Hausarbeiten mit Literaturverzeichnis als Word oder PDF ausgeben (pandoc), Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
 - **Ordnung nach Modulen.** Aus dem Modulhandbuch entsteht je Modul eine Notiz (Kürzel, Semester, ECTS, Prüfungsleistung); eigene Notizen ordnest du per Vorlage einem Modul zu, und die Übersicht `Studium.base` zeigt Studienplan, aktuelles Semester und Notizen nach Modul. Jedes Modul bekommt ein passendes Symbol; Wahlmodule kommen später dazu.
-- **Lernen, planen, ausprobieren mit Claude.** Die Notiz **„Mit Claude arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
-- **Ordnung bei Anhängen.** Jede Notiz bekommt ihren eigenen Anhänge-Ordner, eingefügte Bilder heißen wie die Notiz, und beim Umbenennen oder Verschieben ziehen sie mit. Alte, lose Dateien räumt Claude auf Zuruf auf.
+- **Lernen, planen, ausprobieren mit KI.** Die Notiz **„Mit KI-Agenten arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
+- **Ordnung bei Anhängen.** Jede Notiz bekommt ihren eigenen Anhänge-Ordner, eingefügte Bilder heißen wie die Notiz, und beim Umbenennen oder Verschieben ziehen sie mit. Alte, lose Dateien räumt der Agent auf Zuruf auf.
 - **Plugins sind eingerichtet:** Git, Excalidraw, Excalidraw Extras, Iconic, Slash Commander, Sort & Permute Lines, Custom Attachment Location, Advanced Rename and Delete Handler, Claudian – mit Symbolen für die wichtigsten Ordner.
 
 ## Einrichten
 
 **Vorher (macht die Kursleitung):**
 
-1. Obsidian installieren, deinen Vault öffnen und Claudian mit Claude einrichten.
+1. Obsidian installieren, deinen Vault öffnen und Claudian mit Claude oder Codex einrichten.
 2. In Obsidian: Einstellungen → Allgemein → **Command line interface** einschalten.
 
-**Dann:** Den Text aus [`AGENT-PROMPT.md`](AGENT-PROMPT.md) in Claudian einfügen und Claude folgen. Claude fragt zuerst, für welchen Vault das Setup gelten soll, und erklärt jeden Schritt, bevor etwas passiert.
+**Dann:** Den Text aus [`AGENT-PROMPT.md`](AGENT-PROMPT.md) in Claudian einfügen und dem Agent folgen. Er fragt zuerst, für welchen Vault das Setup gelten soll, und erklärt jeden Schritt, bevor etwas passiert.
 
 **Du selbst tust nur das:**
 
@@ -36,7 +36,7 @@ Dauer: etwa 20–40 Minuten.
 
 ## Wenn etwas ist
 
-Frag Claude in Obsidian – egal ob Fehlermeldung, neuer Vault oder eine Datei, die du zurückhaben willst. Erscheint das Fenster **„Obsidian-Backup fehlgeschlagen“**, mach ein Bildschirmfoto davon und gib es Claude.
+Frag deinen Agent in Obsidian – egal ob Fehlermeldung, neuer Vault oder eine Datei, die du zurückhaben willst. Erscheint das Fenster **„Obsidian-Backup fehlgeschlagen“**, mach ein Bildschirmfoto davon und gib es dem Agent.
 
 ## Wo was liegt
 
@@ -60,7 +60,8 @@ Der Agent arbeitet [`agent/SETUP.md`](agent/SETUP.md) ab; das Interview steht in
 | `install.sh` | Git in jedem Vault unter `~/Obsidian Vaults` + stündlicher Backup-Job |
 | `backup.sh` | das Backup selbst (läuft über launchd) |
 | `vault-setup.sh` | Obsidian-Plugins und -Einstellungen pro Vault, über die Obsidian CLI |
-| `vault-template/` | `CLAUDE.md`, `Profil.md`, `docs/agents/` und die Einführung „Mit Claude arbeiten“ für jeden Vault |
+| `set-icons.sh` | Symbole (Iconic) für Notizen und Ordner – nutzt der Agent z. B. für Modulnotizen |
+| `vault-template/` | `AGENTS.md` (Anweisungen für jeden Agent; `CLAUDE.md` verweist darauf), `Profil.md`, `docs/agents/`, Vorlagen, Studium-Übersicht und die Einführung „Mit KI-Agenten arbeiten“ für jeden Vault |
 | `gitignore.template` | hält Bilder, PDFs, CAD-Dateien, Plugin-Code und Chat-Daten aus Git heraus |
 | `uninstall.sh` | entfernt den Backup-Job; Vaults und Backups bleiben |
 

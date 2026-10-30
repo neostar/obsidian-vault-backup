@@ -26,17 +26,25 @@ vault_init() {
 # Die CLI wählt den Vault über das Arbeitsverzeichnis; zusätzlich wird der Pfad
 # geprüft (bei gleichnamigen Vaults träfe die CLI sonst evtl. den falschen).
 # Läuft bewusst nicht in $(…), damit die Prüfung das Skript beenden kann.
+# Die CLI liefert gelegentlich gar keine Ausgabe; jede Antwort trägt deshalb das
+# Präfix „OK:“, und fehlt es, wird bis zu dreimal neu gefragt. Die Ausdrücke in
+# den Skripten sind so geschrieben, dass eine Wiederholung nichts doppelt tut.
 R=""
 STRICT=1   # 0 nur beim Öffnen: dort ist ein anderer Vault noch erwartet
 js() {
-  local code out
-  code="app.vault.adapter.basePath !== $VAULT_JS ? 'FALSCHER VAULT: ' + app.vault.adapter.basePath : String($1)"
-  out="$(cd "$VAULT" && "$OBS" eval code="$code" 2>&1 || true)"
-  R="${out#=> }"
-  case "$R" in
-    "FALSCHER VAULT"*) ((STRICT == 0)) || die "Obsidian zeigt einen anderen Vault: ${R#FALSCHER VAULT: }" ;;
-    *) ;;
-  esac
+  local code out try
+  code="app.vault.adapter.basePath !== $VAULT_JS ? 'FALSCHER VAULT: ' + app.vault.adapter.basePath : 'OK:' + String($1)"
+  for try in 1 2 3; do
+    out="$(cd "$VAULT" && "$OBS" eval code="$code" 2>&1 || true)"
+    R="${out#=> }"
+    case "$R" in
+      OK:*) R="${R#OK:}"; return 0 ;;
+      "FALSCHER VAULT"*)
+        ((STRICT == 0)) || die "Obsidian zeigt einen anderen Vault: ${R#FALSCHER VAULT: }"
+        return 0 ;;
+      *) ((try < 3)) && sleep 1 ;;
+    esac
+  done
 }
 
 # wait_for <Ausdruck> <Sekunden> – wartet, bis der Ausdruck "true" ergibt
