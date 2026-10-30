@@ -42,9 +42,18 @@ Für jedes Modul eine Notiz `Studium/Module/<Modulname>.md` mit den Eigenschafte
 - Weichen Studienverlaufsseite und Modulhandbuch voneinander ab (Name, Semester, ECTS), gilt das Handbuch mit dem jüngeren Datum; nenne die Abweichungen der Person.
 - **Wahlmodule** sind eine spätere Wahl: Für jeden Wahlbereich im Studienverlauf eine Platzhalter-Notiz, z. B. `Wahlmodule (5. Semester).md` mit `verpflichtungsgrad: Wahlmodul`, `status: geplant`, `ects` = Summe laut Studienverlauf und dem Satz „Sobald du gewählt hast, sag Claude: ‚Ich habe <Modul> als Wahlmodul gewählt.‘“
 - Darunter in jeder Notiz nur die Überschriften der Vorlage; Lernergebnisse und Inhalte aus dem Handbuch in zwei, drei Sätzen unter „Worum es geht“.
+- **Symbole:** Gib jeder Modulnotiz ein Lucide-Symbol, das zum Inhalt passt (https://lucide.dev/icons – z. B. `lucide-scale` Recht, `lucide-bus` Verkehr, `lucide-trees` Landschaft, `lucide-pencil-ruler` Entwerfen, `lucide-chart-column` Statistik, `lucide-users` Soziologie). Farbe `cyan` für Pflichtmodule, `purple` für Wahlmodule, Platzhalter `lucide-circle-dashed` in `gray`. Alle in einem Aufruf, Pfade relativ zum Vault:
+
+  ```bash
+  ~/Library/Application\ Support/obsidian-vault-setup/set-icons.sh "<Vault-Pfad>" \
+    "Studium/Module/Bau- und Planungsrecht I.md=lucide-scale=cyan" \
+    "Studium/Module/Verkehrsplanung und -technik.md=lucide-bus=cyan"
+  ```
+
+  Meldet das Skript „Unbekanntes Symbol“, wähl für diese Notizen ein anderes und ruf es nur mit ihnen erneut auf.
 
 ## Ergebnis
 
 Füll `Profil.md` (Abschnitte Person, Studium, Vorgaben für Abgaben, Zusammenarbeit mit Claude, Dieser Vault) mit den Antworten und trag bei „Studienverlauf“ den Link und `[[Studienverlauf]]` ein. Zeig das fertige Profil vor dem Schreiben und schreib erst nach dem OK. Sag dazu, dass `Profil.md` eine normale Notiz ist, die sie jederzeit ändern kann – etwa zu Semesterbeginn.
 
-**Fertig, wenn:** `Profil.md` die bestätigten Antworten enthält, `Studium/Studienverlauf.md` und eine Notiz je Modul in `Studium/Module/` existieren (sofern ein Link da war), `Studium/Studium.base` sie unter „Module nach Semester“ zeigt und `CLAUDE.md` die Zeile `@Profil.md` enthält.
+**Fertig, wenn:** `Profil.md` die bestätigten Antworten enthält, `Studium/Studienverlauf.md` und eine Notiz je Modul in `Studium/Module/` existieren (sofern ein Link da war), `Studium/Studium.base` sie unter „Module nach Semester“ zeigt, `set-icons.sh` ohne Warnung durchläuft und `CLAUDE.md` die Zeile `@Profil.md` enthält.

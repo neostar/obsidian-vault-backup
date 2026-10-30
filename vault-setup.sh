@@ -10,52 +10,14 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-OBS="${OBSIDIAN_CLI:-/Applications/Obsidian.app/Contents/MacOS/obsidian}"
 # Reihenfolge: advanced-rename-and-delete-handler vor custom-attachment-location (Abhängigkeit)
 PLUGINS=(obsidian-git obsidian-excalidraw-plugin excalidraw-extras iconic slash-commander obsidian-sort-and-permute-lines advanced-rename-and-delete-handler obsidian-custom-attachment-location realclaudian)
 STORE="https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json"
 
-die()  { echo "❌ $*" >&2; exit 1; }
-ok()   { echo "✅ $*"; }
-warn() { echo "⚠️  $*"; }
-json() { /usr/bin/python3 -I -c 'import json,sys;print(json.dumps(sys.stdin.read()))'; }
-
-VAULT="${1:-}"
-[[ -n "$VAULT" ]] || die "Verwendung: $0 \"/Pfad/zum/Vault\""
-VAULT="${VAULT%/}"
-[[ -d "$VAULT/.obsidian" ]] || die "Kein Obsidian-Vault: $VAULT"
-VAULT="$(cd "$VAULT" && pwd -P)"   # -P: Obsidian meldet aufgelöste Pfade (/tmp → /private/tmp)
-NAME="$(basename "$VAULT")"
-VAULT_JS="$(printf '%s' "$VAULT" | json)"
-[[ -x "$OBS" ]] || die "Obsidian nicht gefunden: $OBS"
-
-# js <Ausdruck> – wertet JavaScript im Vault aus, Ergebnis als Text in $R.
-# Die CLI wählt den Vault über das Arbeitsverzeichnis; zusätzlich wird der Pfad
-# geprüft (bei gleichnamigen Vaults träfe die CLI sonst evtl. den falschen).
-# Läuft bewusst nicht in $(…), damit die Prüfung das Skript beenden kann.
-R=""
-STRICT=1   # 0 nur beim Öffnen: dort ist ein anderer Vault noch erwartet
-js() {
-  local code out
-  code="app.vault.adapter.basePath !== $VAULT_JS ? 'FALSCHER VAULT: ' + app.vault.adapter.basePath : String($1)"
-  out="$(cd "$VAULT" && "$OBS" eval code="$code" 2>&1 || true)"
-  R="${out#=> }"
-  case "$R" in
-    "FALSCHER VAULT"*) ((STRICT == 0)) || die "Obsidian zeigt einen anderen Vault: ${R#FALSCHER VAULT: }" ;;
-    *) ;;
-  esac
-}
-
-# wait_for <Ausdruck> <Sekunden> – wartet, bis der Ausdruck "true" ergibt
-wait_for() {
-  local i
-  for ((i = 0; i < $2; i++)); do
-    js "$1"
-    [[ "$R" == "true" ]] && return 0
-    sleep 1
-  done
-  return 1
-}
+# shellcheck source=lib/obsidian.sh
+source "$HERE/lib/obsidian.sh"
+[[ -n "${1:-}" ]] || die "Verwendung: $0 \"/Pfad/zum/Vault\""
+vault_init "$1"
 
 # --- Vault in Obsidian öffnen ----------------------------------------------------
 if ! (cd "$VAULT" && "$OBS" version >/dev/null 2>&1); then
@@ -281,45 +243,22 @@ js "(() => { const ip = app.internalPlugins;
 ok "Studium: Vorlagen in „$R“ (⌘P → Vorlage einfügen), Übersicht Studium/Studium.base"
 
 # --- Symbole (Iconic) ---------------------------------------------------------------
-# Nur für Einträge ohne eigenes Symbol – was die Person gesetzt hat, bleibt.
+# Nur für vorhandene Einträge ohne eigenes Symbol – was die Person gesetzt hat, bleibt.
 # Rein optisch: Probleme hier sind Warnungen, kein Abbruch.
-set_icons() {
-  # shellcheck disable=SC2310
-  wait_for "!!app.plugins.plugins['iconic'] && !app.plugins.plugins['iconic'].isSaving" 30 || { warn "Iconic lädt nicht – Symbole übersprungen."; return 0; }
-  # Neu angelegte Dateien kennt Obsidian erst nach dem Indexieren
-  # shellcheck disable=SC2310
-  wait_for "!!app.vault.getAbstractFileByPath('CLAUDE.md')" 15 || true
-  # Alle setzen, einmal speichern, Plugin neu laden (zeigt die Symbole)
-  js "(() => { const ic = app.plugins.plugins['iconic'];
-    const want = [['Attachments','lucide-paperclip','blue'], ['Excalidraw','lucide-pencil-ruler','green'],
-      ['Planung','lucide-map','red'], ['Lernen','lucide-book-open','cyan'],
-      ['docs','lucide-bot','purple'], ['CLAUDE.md','lucide-sparkles','orange'],
-      ['Mit Claude arbeiten.md','lucide-graduation-cap','orange'], ['Profil.md','lucide-user','pink'],
-      ['Studium','lucide-school','cyan'], ['Vorlagen','lucide-layout-template','gray']];
-    const set = [];
-    for (const [p, i, c] of want) {
-      if (app.vault.getAbstractFileByPath(p) && !ic.settings.fileIcons[p]) { ic.settings.fileIcons[p] = {icon: i, color: c}; set.push(p); }
-    }
-    window.__ovsIcons = 'läuft';
-    ic.saveSettings().then(() => app.plugins.disablePlugin('iconic')).then(() => app.plugins.enablePlugin('iconic'))
-      .then(() => { window.__ovsIcons = 'fertig'; }).catch(e => { window.__ovsIcons = 'Fehler: ' + e; });
-    return JSON.stringify(set); })()"
-  local wanted="$R"
-  # shellcheck disable=SC2310
-  wait_for "window.__ovsIcons !== 'läuft'" 30 || { warn "Symbole: keine Rückmeldung von Iconic."; return 0; }
-  # Erfolg erst, wenn alles auf der Platte steht (Iconic kann Speichern überspringen)
-  if /usr/bin/python3 -I -c 'import json,sys
-want=json.loads(sys.argv[2]); have=json.load(open(sys.argv[1])).get("fileIcons",{})
-sys.exit(0 if all(p in have for p in want) else 1)' "$VAULT/.obsidian/plugins/iconic/data.json" "$wanted" 2>/dev/null; then
-    ok "Symbole für Ordner und Notizen gesetzt"
-    return 0
-  fi
-  return 1
-}
-# Ein frisch installiertes Iconic schreibt beim ersten Start evtl. seine eigene
-# data.json über unsere – dann ein zweiter Versuch.
-# shellcheck disable=SC2310
-set_icons || { sleep 3; set_icons; } || warn "Symbole nicht gespeichert – vault-setup.sh später erneut ausführen."
+ICONS=()
+for e in "Attachments=lucide-paperclip=blue" "Excalidraw=lucide-pencil-ruler=green" \
+  "Planung=lucide-map=red" "Lernen=lucide-book-open=cyan" "docs=lucide-bot=purple" \
+  "CLAUDE.md=lucide-sparkles=orange" "Mit Claude arbeiten.md=lucide-graduation-cap=orange" \
+  "Profil.md=lucide-user=pink" "Studium=lucide-school=cyan" "Studium/Module=lucide-library=cyan" \
+  "Vorlagen=lucide-layout-template=gray"; do
+  p="${e%%=*}"
+  [[ -e "$VAULT/$p" ]] && ICONS+=("$e")
+done
+if "$HERE/set-icons.sh" "$VAULT" "${ICONS[@]}" >/dev/null; then
+  ok "Symbole für Ordner und Notizen gesetzt"
+else
+  warn "Symbole nicht vollständig gesetzt – vault-setup.sh später erneut ausführen."
+fi
 
 echo
 ok "Fertig: $NAME"
