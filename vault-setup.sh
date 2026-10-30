@@ -3,7 +3,7 @@
 # Richtet einen Vault in Obsidian ein – über die Obsidian CLI:
 #   Community-Plugins (inkl. Claudian) installieren + aktivieren, Git-Plugin auf „nur Commit“,
 #   Anhänge-Ordner „Attachments“, Agent-Vorlagen (AGENTS.md + CLAUDE.md, docs/agents/,
-#   „Mit KI-Agenten arbeiten.md“, Profil.md), Symbole für Ordner und Notizen (Iconic).
+#   „Mit Claudian arbeiten.md“, Profil.md), Symbole für Ordner und Notizen (Iconic).
 # Verwendung:  ./vault-setup.sh "/Pfad/zum/Vault"
 # Voraussetzung: Obsidian läuft, CLI ist aktiviert (Einstellungen → Allgemein).
 # Kann gefahrlos erneut ausgeführt werden; Vorhandenes wird nicht überschrieben.
@@ -276,7 +276,7 @@ ICONS=()
 for e in "Attachments=lucide-paperclip=blue" "Excalidraw=lucide-pencil-ruler=green" \
   "Planung=lucide-map=red" "Lernen=lucide-book-open=cyan" "docs=lucide-bot=purple" \
   "AGENTS.md=lucide-sparkles=orange" "CLAUDE.md=lucide-link=gray" \
-  "Mit KI-Agenten arbeiten.md=lucide-graduation-cap=orange" \
+  "Mit Claudian arbeiten.md=lucide-graduation-cap=orange" \
   "Profil.md=lucide-user=pink" "Studium=lucide-school=cyan" "Studium/Module=lucide-library=cyan" \
   "Vorlagen=lucide-layout-template=gray"; do
   p="${e%%=*}"

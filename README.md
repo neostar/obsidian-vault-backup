@@ -11,7 +11,7 @@ Gedacht für Architektur-Studierende auf dem Mac.
 - **Dein Agent kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst, welche Vorgaben für Abgaben gelten und wofür der Vault da ist; aus dem Link zu deinem Studienverlauf holt er die Module aller Semester. Das steht danach in der Notiz `Profil` – jede künftige Unterhaltung startet mit diesem Wissen.
 - **Werkzeuge für deine Dateien.** Der Agent kann Karten und Geodaten aufbereiten (OpenStreetMap, Shapefile, GeoPackage für QGIS), Tabellen und CSV-Dateien auswerten, Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Hausarbeiten mit Literaturverzeichnis als Word oder PDF ausgeben (pandoc), Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
 - **Ordnung nach Modulen.** Aus dem Modulhandbuch entsteht je Modul eine Notiz (Kürzel, Semester, ECTS, Prüfungsleistung); eigene Notizen ordnest du per Vorlage einem Modul zu, und die Übersicht `Studium.base` zeigt Studienplan, aktuelles Semester und Notizen nach Modul. Jedes Modul bekommt ein passendes Symbol; Wahlmodule kommen später dazu.
-- **Lernen, planen, ausprobieren mit KI.** Die Notiz **„Mit KI-Agenten arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
+- **Lernen, planen, ausprobieren mit KI.** Die Notiz **„Mit Claudian arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
 - **Ordnung bei Anhängen.** Jede Notiz bekommt ihren eigenen Anhänge-Ordner, eingefügte Bilder heißen wie die Notiz, und beim Umbenennen oder Verschieben ziehen sie mit. Alte, lose Dateien räumt der Agent auf Zuruf auf.
 - **Plugins sind eingerichtet:** Git, Excalidraw, Excalidraw Extras, Iconic, Slash Commander, Sort & Permute Lines, Custom Attachment Location, Advanced Rename and Delete Handler, Claudian – mit Symbolen für die wichtigsten Ordner.
 
@@ -61,7 +61,7 @@ Der Agent arbeitet [`agent/SETUP.md`](agent/SETUP.md) ab; das Interview steht in
 | `backup.sh` | das Backup selbst (läuft über launchd) |
 | `vault-setup.sh` | Obsidian-Plugins und -Einstellungen pro Vault, über die Obsidian CLI |
 | `set-icons.sh` | Symbole (Iconic) für Notizen und Ordner – nutzt der Agent z. B. für Modulnotizen |
-| `vault-template/` | `AGENTS.md` (Anweisungen für jeden Agent; `CLAUDE.md` verweist darauf), `Profil.md`, `docs/agents/`, Vorlagen, Studium-Übersicht und die Einführung „Mit KI-Agenten arbeiten“ für jeden Vault |
+| `vault-template/` | `AGENTS.md` (Anweisungen für jeden Agent; `CLAUDE.md` verweist darauf), `Profil.md`, `docs/agents/`, Vorlagen, Studium-Übersicht und die Einführung „Mit Claudian arbeiten“ für jeden Vault |
 | `gitignore.template` | hält Bilder, PDFs, CAD-Dateien, Plugin-Code und Chat-Daten aus Git heraus |
 | `uninstall.sh` | entfernt den Backup-Job; Vaults und Backups bleiben |
 

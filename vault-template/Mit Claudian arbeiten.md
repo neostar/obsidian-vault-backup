@@ -2,9 +2,9 @@
 tags:
   - anleitung
 ---
-# Mit KI-Agenten arbeiten
+# Mit Claudian arbeiten
 
-Dein KI-Agent – Claude oder Codex – ist rechts in Obsidian (Claudian) immer dabei. Er kennt dich und deinen Vault: Was in [[Profil]] steht – wer du bist, was du studierst, woran du arbeitest, wobei du Hilfe willst –, liest er zu Beginn jedes Chats. Deinen Studienplan findet er in [[Studienverlauf]]. Du kannst ganz normal schreiben, wie mit einer Kommilitonin. Für größere Vorhaben gibt es fünf **Skills**: eingebaute Arbeitsweisen, die du mit einem Befehl startest.
+Claudian ist rechts in Obsidian immer dabei: dein KI-Agent, wahlweise mit Claude oder Codex. Er kennt dich und deinen Vault: Was in [[Profil]] steht – wer du bist, was du studierst, woran du arbeitest, wobei du Hilfe willst –, liest er zu Beginn jedes Chats. Deinen Studienplan findet er in [[Studienverlauf]]. Du kannst ganz normal schreiben, wie mit einer Kommilitonin. Für größere Vorhaben gibt es fünf **Skills**: eingebaute Arbeitsweisen, die du mit einem Befehl startest.
 
 > [!tip] So startest du einen Skill
 > Tippe im Chat den Namen des Skills, dahinter in einem Satz, worum es geht. Der Agent führt dich dann Schritt für Schritt.
