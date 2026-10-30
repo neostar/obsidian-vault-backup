@@ -15,6 +15,17 @@ Python-Pakete laufen über `uv`, nie über `pip install` – so bleibt das Syste
 - **Wohin mit Skripten:** wiederverwendbare nach `.scratch/skripte/` (in Obsidian ausgeblendet, aber im Backup); Einmal-Skripte in einen Temp-Ordner.
 - **Diagramme:** `matplotlib` als PNG/SVG nach `Attachments/`, in der Notiz einbetten (`![[diagramm.png]]`).
 
+## Texte: Hausarbeit, Bericht, Bachelorarbeit (pandoc)
+
+Die Person schreibt in Obsidian (Markdown); `pandoc` macht daraus, was abgegeben wird. Quelle bleibt die Notiz – nach Änderungen einfach neu erzeugen.
+
+- **Word:** `pandoc text.md -o text.docx`. Mit Vorlage der Hochschule oder des Lehrstuhls: `--reference-doc vorlage.docx` (übernimmt Schriften, Überschriften, Ränder). Eine leere Vorlage zum Anpassen: `pandoc -o vorlage.docx --print-default-data-file reference.docx`.
+- **Zitate und Literaturverzeichnis:** Quellen als `.bib` (Export aus Zotero: Rechtsklick auf die Sammlung → Exportieren → BibTeX) neben die Notiz, im Text `[@schlüssel, S. 12]`, ans Ende `# Literatur`. Aufruf mit `--citeproc --bibliography quellen.bib --csl stil.csl`. Den Zitierstil als `.csl`-Datei aus https://github.com/citation-style-language/styles laden (z. B. `apa.csl`) – welcher gilt, gibt die Lehrperson vor; frag nach. Kopf der Notiz: `lang: de-DE` für deutsche Ausgabe („S.“, „und“).
+- **PDF:** über WeasyPrint, kein LaTeX nötig: `pandoc text.md --citeproc --pdf-engine=weasyprint --css stil.css -o text.pdf`.
+- **Folien:** `pandoc text.md -o folien.pptx` – jede `#`-Überschrift wird eine Folie; mit `--reference-doc vorlage.pptx` im Hochschul-Design.
+- **Fremde Dateien in den Vault holen:** `pandoc datei.docx -t markdown -o datei.md --extract-media "<Anhänge-Ordner>"`; für PowerPoint/Excel/PDF `markitdown` (siehe oben).
+- **Obsidian-Eigenheiten vorher umsetzen:** `[[Wikilinks]]` und `![[Bild.png]]` versteht pandoc nicht – für den Export in normale Links/`![](Pfad)` wandeln (in einer Kopie, nicht in der Notiz), `%% … %%`-Kommentare entfernen.
+
 ## Tabellen und CSV
 
 Für Auswertungen (Umfragen, Zählungen, Flächenbilanzen, Statistik-Downloads):
@@ -48,7 +59,7 @@ Für Stadt- und Raumplanung zentral. Alles über `uv`, ohne GDAL-Installation �
 | PDF → Bilder / Text | `pdftoppm -png -r 150 in.pdf seite`, `pdftotext -layout in.pdf -` | |
 | Gescannte PDFs durchsuchbar machen | `ocrmypdf -l deu in.pdf out.pdf` | nicht vorinstalliert – erst fragen, dann `brew install ocrmypdf tesseract-lang` |
 | Layout als PDF (Plakat, Portfolio, Abgabeblatt) | HTML + CSS schreiben, `weasyprint layout.html out.pdf` | Seitenformat per CSS `@page { size: A3 landscape; }`; Bilder aus `Attachments/` |
-| Notiz → Word | `pandoc notiz.md -o notiz.docx` | PDF lieber über HTML + `weasyprint` als über LaTeX (nicht installiert) |
+| Notiz → Word / PDF / Folien | `pandoc notiz.md -o notiz.docx` | Details, Zitate, Vorlagen: Abschnitt „Texte“ oben; PDF über `--pdf-engine=weasyprint` (LaTeX ist nicht installiert) |
 | DWG → DXF | `dwg2dxf -y -o "Attachments/plan.dxf" "Attachments/plan.dwg"` | ohne `-o` landet die Datei im aktuellen Ordner; `-y` überschreibt eine ältere Fassung |
 | DXF → PDF/PNG | `uvx --from "ezdxf[draw]" ezdxf draw -o plan.pdf plan.dxf` | Layer, Flächen, Maße per Skript: `uv run --with ezdxf` |
 | Video kürzen / komprimieren | `ffmpeg -ss 00:01:00 -to 00:02:00 -i in.mp4 -c copy out.mp4`; `ffmpeg -i in.mov -vcodec libx264 -crf 26 out.mp4` | |

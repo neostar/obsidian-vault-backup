@@ -80,6 +80,7 @@ Auf deinem Mac sind Werkzeuge installiert, die Claude direkt nutzt. Frag einfach
 - **Karten und Geodaten:** Gebäude, Straßen, Grünflächen und Einrichtungen aus OpenStreetMap für dein Untersuchungsgebiet holen, Shapefiles und GeoJSON umwandeln, Flächen und Abstände berechnen, Karten als PDF für die Abgabe zeichnen – und Ergebnisse als GeoPackage, das du direkt in QGIS öffnest.
 - **Erreichbarkeit:** „Welche Supermärkte, Kitas und Haltestellen erreicht man im Quartier in 10 Minuten zu Fuß?“
 - **Tabellen und Statistik:** Bevölkerungs- oder Zensusdaten zusammenführen, Verkehrszählungen auswerten, Umfrageergebnisse aus der Sozialforschung zählen, Excel-Tabellen bereinigen – mit Diagrammen für den Bericht.
+- **Hausarbeit, Projektbericht, Bachelorarbeit:** Du schreibst in Obsidian, Claude macht daraus eine Word-Datei oder ein PDF – im Layout der Hochschulvorlage, mit Zitaten und automatischem Literaturverzeichnis (Quellen z. B. aus Zotero) – oder Folien für die Präsentation. Ändert sich der Text, wird die Datei in Sekunden neu erzeugt. Word-Dateien von anderen holt Claude umgekehrt als Notiz in deinen Vault.
 - **Pläne:** DWG-Pläne als PDF ausgeben, Flächen und Layer auslesen; PDFs zusammenfügen, Seiten herausnehmen, für den Upload verkleinern.
 - **Layout:** Plakat, Portfolio oder Abgabeblatt aus deinen Notizen als PDF setzen – gern in drei Varianten zum Vergleichen –, Word-Dateien erzeugen.
 - **Bilder, Video und Audio:** Fotos aus der Bestandsaufnahme verkleinern und Standortdaten entfernen, Clips kürzen, Interviews als Tonspur speichern.
