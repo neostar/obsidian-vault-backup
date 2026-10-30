@@ -23,11 +23,11 @@ Das ist der größte Vorteil von Claude in Obsidian: Du kannst ihm genau das Mat
 > [!example] Material zuerst in den Vault
 > Leg Vorlesungsfolien (PDF), Mitschriften, Aufgabenstellungen, Pläne und Literatur in deinen Vault – am besten in einen Ordner pro Modul, z. B. `Lernen/Bau- und Planungsrecht I/`. Ein PDF ziehst du einfach in den Obsidian-Dateibaum. Ab dann kann Claude damit arbeiten.
 
-## Die fünf Skills
+## Größere Vorhaben – und der passende Skill
 
-Die Beispiele stammen aus dem Studiengang Stadtplanung (B.Sc.) – vom Einstiegs- und Analyseprojekt bis zur Bachelorarbeit.
+Wähl, was du vorhast – der Befehl dahinter startet die passende Arbeitsweise. Die Beispiele stammen aus dem Studiengang Stadtplanung (B.Sc.) – vom Einstiegs- und Analyseprojekt bis zur Bachelorarbeit.
 
-### `/mattpocock-skills:teach` – etwas Neues lernen
+### Etwas Neues lernen → `/mattpocock-skills:teach`
 
 Claude wird zur Tutorin über mehrere Sitzungen: baut kurze Lektionen mit Übungsfragen und Fallbeispielen, fragt dich ab und hält fest, was du schon kannst. Alles liegt im Ordner `Lernen/<Thema>/` – die Lektionen öffnest du per Klick im Browser –, so geht es nächste Woche genau dort weiter.
 
@@ -44,7 +44,7 @@ Weitere Ideen:
 - *Methoden der empirischen Sozialforschung:* „Erklär mir Stichprobe, Fragebogenaufbau und Auswertung so, dass ich meine eigene Umfrage machen kann.“
 - *Verkehrsplanung und -technik:* „Ich muss bis zur Klausur Leistungsfähigkeit und Querschnitte können. Hier sind die Übungsblätter: `@Lernen/Verkehrsplanung/`.“
 
-### `/mattpocock-skills:grill-with-docs` – einen Plan auf Herz und Nieren prüfen
+### Einen Plan auf Herz und Nieren prüfen → `/mattpocock-skills:grill-with-docs`
 
 Claude stellt dir hartnäckig eine Frage nach der anderen zu deinem Konzept – so lange, bis Lücken und Widersprüche sichtbar sind. Nebenbei entstehen ein **Glossar** (`GLOSSARY.md`: was meinst du genau mit „Quartier“, „Innenentwicklung“, „Nachverdichtung“?) und **Entscheidungsnotizen** (`docs/adr/`: was hast du warum entschieden?). Ideal vor einer Zwischenkritik oder Sprechstunde.
 
@@ -52,7 +52,7 @@ Claude stellt dir hartnäckig eine Frage nach der anderen zu deinem Konzept – 
 - *Planspiel Projekt:* die Position deiner Rolle durchdenken – welche Argumente bringen Verwaltung, Investorin, Bürgerinitiative?
 - *Bachelorarbeit:* Forschungsfrage, Untersuchungsgebiet und Methode festzurren.
 
-### `/mattpocock-skills:wayfinder` – ein großes Vorhaben in Etappen planen
+### Ein großes Vorhaben in Etappen planen → `/mattpocock-skills:wayfinder`
 
 Für Vorhaben, die zu groß für einen Nachmittag sind: Claude legt im Ordner `Planung/` eine **Karte** an – Ziel, offene Fragen, getroffene Entscheidungen – und zerlegt den Weg in einzelne Fragen, die ihr nacheinander klärt, Sitzung für Sitzung. Karte und Fragen sind normale Notizen, die du lesen und ergänzen kannst. Wayfinder plant; das Erledigen kommt danach.
 
@@ -60,7 +60,7 @@ Für Vorhaben, die zu groß für einen Nachmittag sind: Claude legt im Ordner `P
 - *Praktikumsprojekt:* Aufgaben im Büro oder in der Verwaltung, was in den Bericht gehört, Termine.
 - *Bachelorarbeit:* von „Ich habe ein Thema“ bis zur fertigen Gliederung mit Zeitplan.
 
-### `/mattpocock-skills:prototype` – eine Idee schnell zum Ausprobieren bauen
+### Eine Idee schnell zum Ausprobieren bauen → `/mattpocock-skills:prototype`
 
 Claude baut ein kleines interaktives Wegwerf-Modell – eine einzelne HTML-Datei in `Planung/Prototypen/`, die du per Doppelklick im Browser öffnest –, um eine Frage zu beantworten: *Geht diese Rechnung auf? Was passiert, wenn ich hier etwas ändere?*
 
@@ -69,7 +69,7 @@ Claude baut ein kleines interaktives Wegwerf-Modell – eine einzelne HTML-Datei
 - *Verkehr:* Stellplatzbedarf und Wege nach Verkehrsmittel für verschiedene Mobilitätskonzepte durchspielen.
 - *Daseinsvorsorge:* Wie viele Kita- oder Schulplätze braucht das neue Quartier bei unterschiedlichen Bewohnerzahlen?
 
-### `/mattpocock-skills:retro` – aus einer Sitzung lernen
+### Aus einer Sitzung lernen → `/mattpocock-skills:retro`
 
 Nach einer längeren Arbeitssitzung schaut Claude zurück: Wo hat es gesucht, gehakt, falsch verstanden? Daraus schlägt es Verbesserungen vor – etwa neue Hinweise in [[CLAUDE]] –, damit die nächste Sitzung glatter läuft. Der Skill stammt aus der Softwareentwicklung; manche Vorschläge klingen technisch. Frag nach, was sie bedeuten, und übernimm nur, was du verstehst.
 
