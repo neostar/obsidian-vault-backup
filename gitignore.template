@@ -1,0 +1,70 @@
+# macOS
+.DS_Store
+
+# Obsidian: Fensterlayout ändert sich ständig
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Anhänge – werden vom Backup gesichert, nicht von Git
+Attachments/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.heic
+*.tif
+*.tiff
+*.psd
+*.avif
+*.svg
+*.mp4
+*.mov
+*.m4v
+*.mp3
+*.m4a
+*.wav
+*.aif
+*.aiff
+# CAD, 3D, BIM
+*.dwg
+*.dxf
+*.3dm
+*.3dmbak
+*.skp
+*.skb
+*.ifc
+*.rvt
+*.rfa
+*.pln
+*.blend
+*.obj
+*.fbx
+*.stl
+# Grafik & Layout
+*.ai
+*.indd
+*.idml
+*.afdesign
+*.afpub
+*.sketch
+# Office
+*.docx
+*.pptx
+*.xlsx
+*.key
+*.pages
+*.numbers
+# Archive
+*.zip
+*.7z
+*.rar
+
+# Obsidian-Plugin-Code: groß, jederzeit neu ladbar, im Backup enthalten.
+# Plugin-Einstellungen (data.json) und manifest.json bleiben in Git.
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+
+# Claudian: Chat-Metadaten ändern sich ständig – im Backup enthalten, nicht in Git
+.claudian/sessions/
