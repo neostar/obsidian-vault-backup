@@ -11,7 +11,8 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 OBS="${OBSIDIAN_CLI:-/Applications/Obsidian.app/Contents/MacOS/obsidian}"
-PLUGINS=(obsidian-git obsidian-excalidraw-plugin excalidraw-extras iconic slash-commander obsidian-sort-and-permute-lines realclaudian)
+# Reihenfolge: advanced-rename-and-delete-handler vor custom-attachment-location (Abhängigkeit)
+PLUGINS=(obsidian-git obsidian-excalidraw-plugin excalidraw-extras iconic slash-commander obsidian-sort-and-permute-lines advanced-rename-and-delete-handler obsidian-custom-attachment-location realclaudian)
 STORE="https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json"
 
 die()  { echo "❌ $*" >&2; exit 1; }
@@ -147,11 +148,51 @@ else
   ok "Git-Plugin: Commit alle 10 Minuten, kein Push/Pull"
 fi
 
+# --- Anhänge ordnen -----------------------------------------------------------------
+# Custom Attachment Location: jede Notiz bekommt ihren Ordner unter Attachments/,
+# gespiegelt zur Ordnerstruktur der Notizen; eingefügte Bilder heißen wie die Notiz.
+# Advanced Rename and Delete Handler: Anhänge ziehen mit, wenn eine Notiz
+# umbenannt oder verschoben wird. Löschen bleibt aus (nichts verschwindet still).
+# plugin_settings <id> <Python-Code, der dict d anpasst> – nur bei Bedarf schreiben
+plugin_settings() {
+  local id="$1" data="$VAULT/.obsidian/plugins/$1/data.json" changed
+  changed="$(/usr/bin/python3 -I - "$data" "$2" <<'PYEOF'
+import json, os, sys
+path, code = sys.argv[1], sys.argv[2]
+d = json.load(open(path)) if os.path.exists(path) else {}
+before = json.dumps(d, sort_keys=True)
+exec(code)
+print("ja" if json.dumps(d, sort_keys=True) != before else "")
+PYEOF
+)" || die "Einstellungen nicht lesbar: $id"
+  [[ -n "$changed" ]] || return 0
+  # Plugin aus, Datei schreiben, Plugin an – sonst überschreibt es die Datei
+  js "(window.__ovsPl = 'läuft', app.plugins.disablePlugin('$id').then(() => { window.__ovsPl = 'aus'; }), 'ok')"
+  # shellcheck disable=SC2310
+  wait_for "window.__ovsPl === 'aus'" 20 || die "Plugin lässt sich nicht anhalten: $id"
+  /usr/bin/python3 -I - "$data" "$2" <<'PYEOF' || die "Einstellungen nicht schreibbar: $id"
+import json, os, sys
+path, code = sys.argv[1], sys.argv[2]
+d = json.load(open(path)) if os.path.exists(path) else {}
+exec(code)
+json.dump(d, open(path, "w"), indent=2, ensure_ascii=False)
+PYEOF
+  js "(app.plugins.enablePlugin('$id'), 'ok')"
+  # shellcheck disable=SC2310
+  wait_for "!!app.plugins.plugins['$id']" 20 || die "Plugin startet nicht wieder: $id"
+}
+plugin_settings advanced-rename-and-delete-handler \
+  'd.update(shouldHandleRenames=True, shouldRenameAttachmentFolder=True)'
+# Nur setzen, solange das Plugin noch Obsidians Einstellung folgt (Werkszustand) –
+# ein eigenes Muster der Person bleibt erhalten.
+plugin_settings obsidian-custom-attachment-location \
+  'd.get("shouldFollowObsidianAttachmentLocation", True) and d.update(shouldFollowObsidianAttachmentLocation=False, attachmentFolderPath="Attachments/{{noteFolderPath}}/{{noteFileName}}", generatedAttachmentFileName="{{noteFileName}}")'
+ok "Anhänge: je Notiz ein Ordner unter Attachments/, ziehen beim Umbenennen und Verschieben mit"
+
 js "app.vault.getConfig('attachmentFolderPath')"
 [[ "$R" == "Attachments" ]] || js "(app.vault.setConfig('attachmentFolderPath', 'Attachments'), 'ok')"
 # Ordner gleich anlegen, damit er sein Symbol bekommt und sichtbar ist
 js "app.vault.getAbstractFileByPath('Attachments') ? 'da' : (app.vault.createFolder('Attachments'), 'neu')"
-ok "Neue Anhänge landen in Attachments/"
 
 # Dateien wie HTML-Lektionen und Prototypen im Datei-Explorer anzeigen
 js "(app.vault.setConfig('showUnsupportedFiles', true), 'ok')"
@@ -246,11 +287,14 @@ set_icons() {
 want=json.loads(sys.argv[2]); have=json.load(open(sys.argv[1])).get("fileIcons",{})
 sys.exit(0 if all(p in have for p in want) else 1)' "$VAULT/.obsidian/plugins/iconic/data.json" "$wanted" 2>/dev/null; then
     ok "Symbole für Ordner und Notizen gesetzt"
-  else
-    warn "Symbole nicht gespeichert – vault-setup.sh später erneut ausführen."
+    return 0
   fi
+  return 1
 }
-set_icons
+# Ein frisch installiertes Iconic schreibt beim ersten Start evtl. seine eigene
+# data.json über unsere – dann ein zweiter Versuch.
+# shellcheck disable=SC2310
+set_icons || { sleep 3; set_icons; } || warn "Symbole nicht gespeichert – vault-setup.sh später erneut ausführen."
 
 echo
 ok "Fertig: $NAME"

@@ -2,7 +2,7 @@
 
 Die Person studiert kein Programmieren, sondern z. B. Architektur, Bauingenieurwesen, Naturwissenschaften oder Wirtschaft. Sie will Ergebnisse – ein kleineres PDF, ein Plakat, ein Diagramm –, keinen Code. Arbeite deshalb so:
 
-- **Originale bleiben unberührt.** Schreib Ergebnisse in neue Dateien mit sprechendem Namen (`Plan_EG_A3.pdf`, `Foto_klein.jpg`) neben das Original oder nach `Attachments/`, und verlinke sie in der passenden Notiz.
+- **Originale bleiben unberührt.** Schreib Ergebnisse in neue Dateien mit sprechendem Namen (`Plan_EG_A3.pdf`, `Foto_klein.jpg`) neben das Original – im Anhänge-Ordner der Notiz, `Attachments/<Ordner der Notiz>/<Notizname>/` –, und verlinke sie in dieser Notiz.
 - **Ergebnis zeigen, nicht den Befehl.** Nenne Datei, Größe vorher/nachher, Seitenzahl – und öffne PDFs/Bilder bei Bedarf mit `open`.
 - **Erst fragen, dann installieren.** Fehlt ein Werkzeug, sag in einem Satz, wofür es ist, und installiere nach dem OK. `sudo` braucht hier nichts; meldet ein Befehl, dass er Admin-Rechte will, halte an und frag.
 

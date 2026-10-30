@@ -11,7 +11,8 @@ Gedacht für Architektur-Studierende auf dem Mac.
 - **Claude kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst und wofür der Vault da ist. Das steht danach in der Datei `CLAUDE.md` – jede künftige Unterhaltung mit Claude startet mit diesem Wissen.
 - **Werkzeuge für deine Dateien.** Claude kann Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
 - **Lernen, planen, ausprobieren mit Claude.** Die Notiz **„Mit Claude arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
-- **Plugins sind eingerichtet:** Git, Excalidraw, Excalidraw Extras, Iconic, Slash Commander, Sort & Permute Lines, Claudian – mit Symbolen für die wichtigsten Ordner.
+- **Ordnung bei Anhängen.** Jede Notiz bekommt ihren eigenen Anhänge-Ordner, eingefügte Bilder heißen wie die Notiz, und beim Umbenennen oder Verschieben ziehen sie mit. Alte, lose Dateien räumt Claude auf Zuruf auf.
+- **Plugins sind eingerichtet:** Git, Excalidraw, Excalidraw Extras, Iconic, Slash Commander, Sort & Permute Lines, Custom Attachment Location, Advanced Rename and Delete Handler, Claudian – mit Symbolen für die wichtigsten Ordner.
 
 ## Einrichten
 

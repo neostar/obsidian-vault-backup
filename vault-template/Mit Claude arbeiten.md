@@ -85,7 +85,7 @@ Auf deinem Mac sind Werkzeuge installiert, die Claude direkt nutzt. Frag einfach
 ## Gut zu wissen
 
 - **Nichts geht verloren.** Alle 10 Minuten wird eine Version gespeichert, jede Stunde ein Backup erstellt. Etwas versehentlich gelöscht? Frag Claude: „Hol mir die Notiz von gestern zurück.“
-- **Ordnung:** Anhänge landen in `Attachments/`, Zeichnungen in `Excalidraw/`, Pläne der Skills in `Planung/`, Lernmaterial in `Lernen/`.
+- **Ordnung bei Bildern und PDFs:** Was du in eine Notiz einfügst oder ziehst, landet automatisch in einem eigenen Ordner für genau diese Notiz – `Attachments/<Ordner>/<Notizname>/` – und ein eingefügter Screenshot heißt wie die Notiz statt „Pasted image 2026…“. Verschiebst oder benennst du die Notiz um, ziehen die Anhänge mit. Lose Dateien von früher? Sag Claude: „Räum Attachments auf.“ Zeichnungen liegen in `Excalidraw/`, Pläne der Skills in `Planung/`, Lernmaterial in `Lernen/`.
 - **[[CLAUDE]] ist deine Notiz.** Neues Projekt, neues Semester? Ändere dort „Über diesen Vault“ – oder bitte Claude darum.
 - **Fehlerfenster „Obsidian-Backup fehlgeschlagen“?** Bildschirmfoto machen (⇧⌘4, Leertaste, Fenster anklicken) und Claude geben.
 - **Claude kann sich irren.** Prüfe Zahlen, Normen und Quellen, bevor sie in eine Abgabe gehen.

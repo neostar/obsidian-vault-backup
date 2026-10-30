@@ -9,7 +9,9 @@
 ## Arbeiten in diesem Vault
 
 - **Ort:** lokal in `{{VAULT_PATH}}`. Das Obsidian Git Plugin committet automatisch; das Backup nach `{{BACKUP_ROOT}}/{{VAULT_NAME}}` läuft stündlich von selbst.
-- **Ablage:** Anhänge (Bilder, PDFs, Pläne) in `Attachments/`, Zeichnungen in `Excalidraw/`, Pläne und Tickets der Skills in `Planung/`, Lernmaterial in `Lernen/<Thema>/`.
+- **Ablage:** Jede Notiz hat ihren Anhänge-Ordner `Attachments/<Ordner der Notiz>/<Notizname>/` (Plugin „Custom Attachment Location“); er zieht beim Umbenennen und Verschieben der Notiz mit. Zeichnungen in `Excalidraw/`, Pläne und Tickets der Skills in `Planung/`, Lernmaterial in `Lernen/<Thema>/`.
+- **Neue Dateien ablegen:** in den Anhänge-Ordner der Notiz, zu der sie gehören, und dort verlinken – nie lose in `Attachments/`.
+- **Aufräumen** („Räum Attachments auf“): `obsidian eval code="app.commands.executeCommandById('obsidian-custom-attachment-location:collect-attachments-entire-vault')"` (mit vollem CLI-Pfad, aus diesem Ordner). Obsidian fragt nach – die Person bestätigt mit OK. Danach Dateien, die keine Notiz verlinkt, als Liste zeigen und fragen, was damit passieren soll; gelöscht wird nur nach ausdrücklichem OK.
 - **Git:** Arbeite immer auf `main` und lass Commits dem Git-Plugin; der Vault hat kein Remote. Schlägt ein Skill einen Branch oder Push vor, leg das Ergebnis stattdessen als Datei in `Planung/` ab.
 - **Verschieben und Umbenennen** über die Obsidian CLI, damit Obsidian die Links mitzieht – aus diesem Ordner: `/Applications/Obsidian.app/Contents/MacOS/obsidian move path="alt.md" to="neu.md"`.
 - **Dateien bearbeiten** (Bilder, PDF, Pläne, Layout, Video, Auswertungen): lies zuerst `~/Library/Application Support/obsidian-vault-setup/agent/WERKZEUGE.md`. Originale bleiben unberührt; Python immer über `uv run` / `uvx`, nie `pip install`.
