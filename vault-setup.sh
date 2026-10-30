@@ -262,6 +262,24 @@ else
   ok "Agent-Vorlagen vollständig"
 fi
 
+# --- Studium: Vorlagen, Übersicht, Eigenschaftstypen -------------------------------
+# Kern-Plugins „Vorlagen“ und „Bases“ an; Vorlagenordner nur setzen, wenn keiner
+# gewählt ist; Typen nur für noch nicht typisierte Eigenschaften (Begriffe aus
+# Modulhandbüchern – die Person kann sie in Obsidian umbenennen).
+js "(() => { const ip = app.internalPlugins;
+  for (const id of ['templates', 'bases']) { const p = ip.getPluginById(id); if (p && !p.enabled) p.enable(true); }
+  const t = ip.getPluginById('templates');
+  if (t?.instance && !t.instance.options.folder) {
+    t.instance.options.folder = 'Vorlagen'; t.instance.options.dateFormat = t.instance.options.dateFormat || 'YYYY-MM-DD';
+    t.saveData(t.instance.options);
+  }
+  const m = app.metadataTypeManager, have = m.types || {};
+  const want = {fachsemester: 'number', ects: 'number', modul: 'multitext', lehrform: 'multitext',
+    modulverantwortliche: 'multitext', datum: 'date'};
+  for (const [k, v] of Object.entries(want)) { if (!have[k]) m.setType(k, v); }
+  return (t?.instance?.options.folder || '?'); })()"
+ok "Studium: Vorlagen in „$R“ (⌘P → Vorlage einfügen), Übersicht Studium/Studium.base"
+
 # --- Symbole (Iconic) ---------------------------------------------------------------
 # Nur für Einträge ohne eigenes Symbol – was die Person gesetzt hat, bleibt.
 # Rein optisch: Probleme hier sind Warnungen, kein Abbruch.
@@ -277,7 +295,7 @@ set_icons() {
       ['Planung','lucide-map','red'], ['Lernen','lucide-book-open','cyan'],
       ['docs','lucide-bot','purple'], ['CLAUDE.md','lucide-sparkles','orange'],
       ['Mit Claude arbeiten.md','lucide-graduation-cap','orange'], ['Profil.md','lucide-user','pink'],
-      ['Studium','lucide-school','cyan']];
+      ['Studium','lucide-school','cyan'], ['Vorlagen','lucide-layout-template','gray']];
     const set = [];
     for (const [p, i, c] of want) {
       if (app.vault.getAbstractFileByPath(p) && !ic.settings.fileIcons[p]) { ic.settings.fileIcons[p] = {icon: i, color: c}; set.push(p); }

@@ -1,0 +1,66 @@
+# Übersicht fürs Studium – Ansichten oben umschalten.
+# Module liegen in Studium/Module, Notizen verweisen über die Eigenschaft „modul“ darauf.
+properties:
+  note.kürzel:
+    displayName: Kürzel
+  note.fachsemester:
+    displayName: Semester
+  note.ects:
+    displayName: ECTS
+  note.verpflichtungsgrad:
+    displayName: Pflicht/Wahl
+  note.prüfungsleistung:
+    displayName: Prüfungsleistung
+  note.status:
+    displayName: Status
+  note.belegt:
+    displayName: Belegt
+  note.modul:
+    displayName: Modul
+  note.typ:
+    displayName: Typ
+  note.datum:
+    displayName: Datum
+views:
+  - type: table
+    name: Module nach Semester
+    filters:
+      and:
+        - file.inFolder("Studium/Module")
+    groupBy:
+      property: note.fachsemester
+      direction: ASC
+    order:
+      - file.name
+      - note.kürzel
+      - note.ects
+      - note.verpflichtungsgrad
+      - note.prüfungsleistung
+      - note.status
+      - note.belegt
+  - type: table
+    name: Dieses Semester
+    filters:
+      and:
+        - file.inFolder("Studium/Module")
+        - 'status == "aktuell"'
+    order:
+      - file.name
+      - note.kürzel
+      - note.ects
+      - note.prüfungsleistung
+  - type: table
+    name: Notizen nach Modul
+    filters:
+      and:
+        - file.hasProperty("modul")
+        - not:
+            - file.inFolder("Studium/Module")
+            - file.inFolder("Vorlagen")
+    groupBy:
+      property: note.modul
+      direction: ASC
+    order:
+      - file.name
+      - note.typ
+      - note.datum

@@ -33,8 +33,18 @@ Gibt die Person einen Link, lies die Seite (bei Reitern oder PDF-Modulhandbüche
 
 Sag der Person in zwei Sätzen, was du gefunden hast. Ohne Link: frag, ob du die Seite suchen sollst; findest du sie nicht sicher, lass den Punkt leer.
 
+### Modulnotizen anlegen
+
+Für jedes Modul eine Notiz `Studium/Module/<Modulname>.md` mit den Eigenschaften aus `Vorlagen/Modul.md` – in dieser Reihenfolge, gleiche Namen:
+
+- Werte aus dem **Modulhandbuch** (PDF, meist auf der Studienverlaufsseite verlinkt; lesen mit `pdftotext -layout`), nicht aus dem Gedächtnis: `kürzel`, `fachsemester`, `ects`, `verpflichtungsgrad`, `angebot` (Angebotshäufigkeit, z. B. WiSe), `lehrform` (Lehrveranstaltungsart, z. B. Vorlesung, Seminar, Projekt), `prüfungsleistung`, `modulverantwortliche`. Was das Handbuch nicht nennt, bleibt leer.
+- `status`: `aktuell` für die Module aus Frage 5, `bestanden` für frühere Semester (nach Rückfrage), sonst `geplant`.
+- Weichen Studienverlaufsseite und Modulhandbuch voneinander ab (Name, Semester, ECTS), gilt das Handbuch mit dem jüngeren Datum; nenne die Abweichungen der Person.
+- **Wahlmodule** sind eine spätere Wahl: Für jeden Wahlbereich im Studienverlauf eine Platzhalter-Notiz, z. B. `Wahlmodule (5. Semester).md` mit `verpflichtungsgrad: Wahlmodul`, `status: geplant`, `ects` = Summe laut Studienverlauf und dem Satz „Sobald du gewählt hast, sag Claude: ‚Ich habe <Modul> als Wahlmodul gewählt.‘“
+- Darunter in jeder Notiz nur die Überschriften der Vorlage; Lernergebnisse und Inhalte aus dem Handbuch in zwei, drei Sätzen unter „Worum es geht“.
+
 ## Ergebnis
 
 Füll `Profil.md` (Abschnitte Person, Studium, Vorgaben für Abgaben, Zusammenarbeit mit Claude, Dieser Vault) mit den Antworten und trag bei „Studienverlauf“ den Link und `[[Studienverlauf]]` ein. Zeig das fertige Profil vor dem Schreiben und schreib erst nach dem OK. Sag dazu, dass `Profil.md` eine normale Notiz ist, die sie jederzeit ändern kann – etwa zu Semesterbeginn.
 
-**Fertig, wenn:** `Profil.md` die bestätigten Antworten enthält, `Studium/Studienverlauf.md` existiert (sofern ein Link da war) und `CLAUDE.md` die Zeile `@Profil.md` enthält.
+**Fertig, wenn:** `Profil.md` die bestätigten Antworten enthält, `Studium/Studienverlauf.md` und eine Notiz je Modul in `Studium/Module/` existieren (sofern ein Link da war), `Studium/Studium.base` sie unter „Module nach Semester“ zeigt und `CLAUDE.md` die Zeile `@Profil.md` enthält.

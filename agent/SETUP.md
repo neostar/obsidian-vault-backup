@@ -93,7 +93,7 @@ Dann für jeden Vault `bash "PKG/vault-setup.sh" "<neuer Pfad>"`. Das Skript öf
 
 Lies `PKG/agent/INTERVIEW.md` und führe es durch.
 
-**Fertig, wenn:** jede eingerichtete `Profil.md` die von der Person bestätigten Antworten enthält und `Studium/Studienverlauf.md` angelegt ist, sofern sie einen Link zum Studienverlauf hatte.
+**Fertig, wenn:** jede eingerichtete `Profil.md` die von der Person bestätigten Antworten enthält und – sofern sie einen Link zum Studienverlauf hatte – `Studium/Studienverlauf.md` und die Modulnotizen in `Studium/Module/` angelegt sind.
 
 ### 9. Google Drive
 

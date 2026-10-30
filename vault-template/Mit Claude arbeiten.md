@@ -112,6 +112,24 @@ Auf deinem Mac sind Werkzeuge installiert, die Claude direkt nutzt. Such dir ein
 >
 > 💬 *„Verkleinere alle Fotos in diesem Ordner auf 2000 px und entferne die GPS-Daten.“*
 
+## Ordnung nach Modulen
+
+Jedes Modul deines Studiengangs hat eine eigene Notiz in `Studium/Module/` – mit Kürzel, Semester, ECTS und Prüfungsleistung wie im Modulhandbuch. Deine eigenen Notizen ordnest du einem Modul zu:
+
+1. Neue Notiz anlegen, dann ⌘P → **„Vorlagen: Vorlage einfügen“** → **Notiz**.
+2. Bei **modul** den Namen zu tippen beginnen – Obsidian schlägt die Module vor. Bei **typ** z. B. Vorlesung, Übung, Projekt, Abgabe oder Literatur.
+
+> [!tip] 📚 Alles auf einen Blick: [[Studium.base]]
+> - **Module nach Semester** – dein ganzer Studienplan mit Status.
+> - **Dieses Semester** – nur die Module mit `status: aktuell`.
+> - **Notizen nach Modul** – alle deine Mitschriften, Übungen und Abgaben, sortiert nach Modul.
+>
+> In jeder Modulnotiz siehst du unten unter „Backlinks“ zusätzlich alle Notizen, die zu ihr gehören.
+
+- **Neues Semester:** „Setz die Module des 4. Semesters auf aktuell und die vom 3. auf bestanden.“
+- **Wahlmodule** wählst du später. Sobald es so weit ist: „Ich habe *Stadtmarketing* als Wahlmodul gewählt“ – Claude legt die Modulnotiz an.
+- **Namen passen dir nicht?** Eigenschaften umbenennen: rechte Seitenleiste → „Alle Eigenschaften“ → Rechtsklick → Umbenennen; Obsidian ändert sie in allen Notizen. Für Werte (z. B. „geplant“ → „offen“) sag Claude Bescheid.
+
 ## Gut zu wissen
 
 - **Nichts geht verloren.** Alle 10 Minuten wird eine Version gespeichert, jede Stunde ein Backup erstellt. Etwas versehentlich gelöscht? Frag Claude: „Hol mir die Notiz von gestern zurück.“
