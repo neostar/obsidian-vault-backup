@@ -4,7 +4,7 @@ tags:
 ---
 # Mit Claude arbeiten
 
-Claude ist rechts in Obsidian (Claudian) immer dabei. Es kennt deinen Vault: Was in [[CLAUDE]] steht – wer du bist, was du studierst, woran du arbeitest –, liest es zu Beginn jedes Chats. Du kannst ganz normal schreiben, wie mit einer Kommilitonin. Für größere Vorhaben gibt es fünf **Skills**: eingebaute Arbeitsweisen, die du mit einem Schrägstrich startest.
+Claude ist rechts in Obsidian (Claudian) immer dabei. Es kennt dich und deinen Vault: Was in [[Profil]] steht – wer du bist, was du studierst, woran du arbeitest, wobei du Hilfe willst –, liest es zu Beginn jedes Chats. Deinen Studienplan findet es in [[Studienverlauf]]. Du kannst ganz normal schreiben, wie mit einer Kommilitonin. Für größere Vorhaben gibt es fünf **Skills**: eingebaute Arbeitsweisen, die du mit einem Schrägstrich startest.
 
 > [!tip] So startest du einen Skill
 > Tippe im Claude-Chat `/` und den Namen, z. B. `/mattpocock-skills:teach`, dahinter in einem Satz, worum es geht. Claude führt dich dann Schritt für Schritt.
@@ -18,7 +18,7 @@ Das ist der größte Vorteil von Claude in Obsidian: Du kannst ihm genau das Mat
 - **`@` für weitere Dateien und Ordner:** Tippe `@` und den Anfang eines Namens, z. B. `@Vorlesung 5` oder `@Attachments/Plan_EG.pdf`. So gibst du Claude auch mehrere Notizen, ganze Ordner oder PDFs auf einmal. Mit `@` erreichst du auch frühere Chats.
 - **Bilder und Screenshots:** mit ⌘V direkt ins Eingabefeld einfügen – ein Foto vom Tafelbild, ein Ausschnitt aus einem Plan, eine Fehlermeldung.
 - **Direkt im Text ändern lassen:** Text markieren, ⌘P drücken und „Claudian: Inline edit“ wählen (oder dafür ein Tastenkürzel festlegen: Einstellungen → Tastenkürzel). Claude zeigt die Änderung Wort für Wort, du nimmst sie an oder verwirfst sie.
-- **Dauerhaftes Wissen** gehört in [[CLAUDE]]: Was Claude in *jedem* Chat wissen soll – dein aktuelles Projekt, Abgabetermine, wie du Quellen zitierst –, schreib es dort unter „Über diesen Vault“.
+- **Dauerhaftes Wissen** gehört in [[Profil]]: Was Claude in *jedem* Chat wissen soll – dein aktuelles Projekt, Abgabetermine, wie du Quellen zitierst, die KI-Regeln deiner Lehrenden –, schreib es dort hinein.
 
 > [!example] Material zuerst in den Vault
 > Leg Vorlesungsfolien (PDF), Mitschriften, Aufgabenstellungen, Pläne und Literatur in deinen Vault – am besten in einen Ordner pro Modul, z. B. `Lernen/Bau- und Planungsrecht I/`. Ein PDF ziehst du einfach in den Obsidian-Dateibaum. Ab dann kann Claude damit arbeiten.
@@ -116,6 +116,6 @@ Auf deinem Mac sind Werkzeuge installiert, die Claude direkt nutzt. Such dir ein
 
 - **Nichts geht verloren.** Alle 10 Minuten wird eine Version gespeichert, jede Stunde ein Backup erstellt. Etwas versehentlich gelöscht? Frag Claude: „Hol mir die Notiz von gestern zurück.“
 - **Ordnung bei Bildern und PDFs:** Was du in eine Notiz einfügst oder ziehst, landet automatisch in einem eigenen Ordner für genau diese Notiz – `Attachments/<Ordner>/<Notizname>/` – und ein eingefügter Screenshot heißt wie die Notiz statt „Pasted image 2026…“. Verschiebst oder benennst du die Notiz um, ziehen die Anhänge mit. Lose Dateien von früher? Sag Claude: „Räum Attachments auf.“ Zeichnungen liegen in `Excalidraw/`, Pläne der Skills in `Planung/`, Lernmaterial in `Lernen/`.
-- **[[CLAUDE]] ist deine Notiz.** Neues Projekt, neues Semester? Ändere dort „Über diesen Vault“ – oder bitte Claude darum.
+- **[[Profil]] ist deine Notiz.** Neues Semester, neues Projekt, neue Termine? Ändere sie dort – oder sag Claude: „Aktualisier mein Profil fürs 4. Semester.“
 - **Fehlerfenster „Obsidian-Backup fehlgeschlagen“?** Bildschirmfoto machen (⇧⌘4, Leertaste, Fenster anklicken) und Claude geben.
 - **Claude kann sich irren.** Prüfe Zahlen, Quellen und vor allem Rechtsfragen (BauGB, BauNVO, Landesbauordnung) an der aktuellen Fassung und deinem Vorlesungsmaterial, bevor sie in eine Abgabe gehen.
