@@ -5,6 +5,9 @@ tap "homebrew/autoupdate"
 brew "git"
 brew "python"        # Skripte, die Agents schreiben
 brew "uv"            # Python-Pakete isoliert nutzen (uv run, uvx)
+# Tabellen & Daten
+brew "duckdb"        # SQL direkt auf CSV, Excel, Parquet
+brew "miller"        # CSV filtern, sortieren, rechnen, zusammenführen (mlr)
 # Bilder
 brew "imagemagick"   # konvertieren, skalieren, zuschneiden
 brew "librsvg"       # SVG → PNG/PDF

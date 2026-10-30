@@ -15,6 +15,27 @@ Python-Pakete laufen über `uv`, nie über `pip install` – so bleibt das Syste
 - **Wohin mit Skripten:** wiederverwendbare nach `.scratch/skripte/` (in Obsidian ausgeblendet, aber im Backup); Einmal-Skripte in einen Temp-Ordner.
 - **Diagramme:** `matplotlib` als PNG/SVG nach `Attachments/`, in der Notiz einbetten (`![[diagramm.png]]`).
 
+## Tabellen und CSV
+
+Für Auswertungen (Umfragen, Zählungen, Flächenbilanzen, Statistik-Downloads):
+
+- **Deutsche CSV-Dateien** (Excel, Statistikämter) nutzen meist `;` als Trenner und `,` als Dezimalzeichen, oft in Windows-Kodierung: `pd.read_csv(f, sep=";", decimal=",", encoding="utf-8-sig")` – klappt das nicht, `encoding="cp1252"`. Für Excel wieder so speichern: `to_csv(f, sep=";", decimal=",", encoding="utf-8-sig", index=False)`.
+- **Excel lesen/schreiben:** `uv run --with pandas --with openpyxl` (`pd.read_excel`, `to_excel`); mehrere Blätter mit `sheet_name=None`.
+- **Schnell nachschauen, filtern, rechnen** ohne Skript: `mlr --icsv --ifs ';' --opprint head -n 10 daten.csv`; `mlr --icsv --opprint put '$Dichte = $Einwohner / $Flaeche_ha' then sort -nr Dichte daten.csv`.
+- **Große oder mehrere Dateien verknüpfen:** `duckdb -c "SELECT … FROM 'daten.csv' JOIN read_xlsx('liste.xlsx') USING (Stadtteil)"` (für Excel vorher `INSTALL excel; LOAD excel;`).
+- **Ergebnis für die Person:** eine Tabelle als Markdown in die Notiz, das Diagramm als PNG im Anhänge-Ordner, die bereinigten Daten als neue `.xlsx` daneben.
+
+## Karten und Geodaten (GIS)
+
+Für Stadt- und Raumplanung zentral. Alles über `uv`, ohne GDAL-Installation – `geopandas` bringt eine eigene mit:
+
+- **Lesen, umwandeln, zuschneiden:** `uv run --with geopandas` – Shapefile, GeoJSON, GeoPackage, KML. Ergebnis bevorzugt als **GeoPackage** (`.gpkg`, eine Datei statt vieler).
+- **Koordinatensystem:** in Deutschland meist **ETRS89 / UTM 32N (`EPSG:25832`)** – darin rechnen Flächen und Abstände in Metern; Web- und GPS-Daten kommen in `EPSG:4326`. Vor jeder Flächen-/Abstandsberechnung `to_crs(25832)`.
+- **OpenStreetMap-Daten** (Gebäude, Straßen, Grünflächen, Einrichtungen der Daseinsvorsorge): `uv run --with osmnx` – z. B. Fußwegenetz eines Quartiers und Erreichbarkeit („Welche Kitas liegen in 10 Minuten Fußweg?“). Quelle angeben: „© OpenStreetMap-Mitwirkende“.
+- **Karten für Abgaben:** statisch mit `geopandas` + `matplotlib` (PNG/PDF, Maßstabsleiste und Nordpfeil ergänzen), interaktiv mit `folium` als HTML-Datei.
+- **QGIS** ist das Standardprogramm im Studium: `brew install --cask qgis` (groß, ca. 1–2 GB – vorher fragen). Ergebnisse als GeoPackage übergeben, dann öffnet die Person sie direkt in QGIS.
+- **Amtliche Daten** (Zensus, Bebauungspläne, Geoportale der Länder) haben eigene Nutzungsbedingungen: Quelle und Stand notieren, Lizenzhinweis übernehmen.
+
 ## Rezepte
 
 | Aufgabe | Werkzeug | Hinweis |

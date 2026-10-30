@@ -9,7 +9,7 @@ Gedacht für Architektur-Studierende auf dem Mac.
 - **Nichts geht verloren.** Jede Änderung an deinen Notizen wird alle 10 Minuten festgehalten (Git), und jede Stunde landet eine Kopie deines Vaults in `~/Obsidian-Backup` – Google Drive lädt sie hoch. Gelöschte Dateien bleiben 90 Tage im Backup.
 - **Alles bleibt auf deinem Mac.** Dein Vault liegt in `~/Obsidian Vaults/` und funktioniert auch ohne Internet.
 - **Claude kennt deinen Vault.** In einem kurzen Gespräch erzählst du, wer du bist, was du studierst und wofür der Vault da ist. Das steht danach in der Datei `CLAUDE.md` – jede künftige Unterhaltung mit Claude startet mit diesem Wissen.
-- **Werkzeuge für deine Dateien.** Claude kann Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
+- **Werkzeuge für deine Dateien.** Claude kann Karten und Geodaten aufbereiten (OpenStreetMap, Shapefile, GeoPackage für QGIS), Tabellen und CSV-Dateien auswerten, Bilder umwandeln, PDFs zusammenfügen und verkleinern, DWG-Pläne lesen, Layouts als PDF setzen und Videos schneiden. Die Werkzeuge halten sich selbst aktuell.
 - **Lernen, planen, ausprobieren mit Claude.** Die Notiz **„Mit Claude arbeiten“** in deinem Vault erklärt fünf eingebaute Arbeitsweisen: Neues lernen (`teach`), ein Konzept vor der Zwischenkritik prüfen lassen (`grill-with-docs`), die Abschlussarbeit in Etappen planen (`wayfinder`), eine Idee als klickbares Modell ausprobieren (`prototype`) und aus einer Sitzung lernen (`retro`).
 - **Ordnung bei Anhängen.** Jede Notiz bekommt ihren eigenen Anhänge-Ordner, eingefügte Bilder heißen wie die Notiz, und beim Umbenennen oder Verschieben ziehen sie mit. Alte, lose Dateien räumt Claude auf Zuruf auf.
 - **Plugins sind eingerichtet:** Git, Excalidraw, Excalidraw Extras, Iconic, Slash Commander, Sort & Permute Lines, Custom Attachment Location, Advanced Rename and Delete Handler, Claudian – mit Symbolen für die wichtigsten Ordner.
@@ -50,12 +50,12 @@ Frag Claude in Obsidian – egal ob Fehlermeldung, neuer Vault oder eine Datei, 
 
 ## Für Lehrende und Neugierige
 
-Der Agent arbeitet [`agent/SETUP.md`](agent/SETUP.md) ab; das Interview steht in [`agent/INTERVIEW.md`](agent/INTERVIEW.md), die Fehlerhilfe in [`agent/TROUBLESHOOTING.md`](agent/TROUBLESHOOTING.md), Rezepte für Bilder, PDF, Pläne und Python (über `uv`) in [`agent/WERKZEUGE.md`](agent/WERKZEUGE.md).
+Der Agent arbeitet [`agent/SETUP.md`](agent/SETUP.md) ab; das Interview steht in [`agent/INTERVIEW.md`](agent/INTERVIEW.md), die Fehlerhilfe in [`agent/TROUBLESHOOTING.md`](agent/TROUBLESHOOTING.md), Rezepte für Tabellen, Karten und Geodaten, Bilder, PDF, Pläne und Python (über `uv`) in [`agent/WERKZEUGE.md`](agent/WERKZEUGE.md).
 
 | Datei | Zweck |
 |---|---|
 | `setup-homebrew.sh` | installiert Homebrew (braucht das Passwort, läuft im Terminal) |
-| `Brewfile` | Werkzeuge: Python, Bilder, PDF, Layout, CAD, Video |
+| `Brewfile` | Werkzeuge: Python (uv), Tabellen (DuckDB, Miller), Bilder, PDF, Layout, CAD, Video |
 | `install.sh` | Git in jedem Vault unter `~/Obsidian Vaults` + stündlicher Backup-Job |
 | `backup.sh` | das Backup selbst (läuft über launchd) |
 | `vault-setup.sh` | Obsidian-Plugins und -Einstellungen pro Vault, über die Obsidian CLI |
