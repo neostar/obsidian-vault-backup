@@ -1,6 +1,6 @@
 # Werkzeuge für Agents – installiert im Hintergrund mit:  bash tools.sh start  (oder direkt: brew bundle --file Brewfile)
 # Automatische Updates (wird in agent/SETUP.md mit `brew autoupdate start` aktiviert)
-tap "domt4/autoupdate"   # früher homebrew/autoupdate – Homebrew folgt dem Umzug nicht mehr selbst
+tap "domt4/autoupdate"   # inoffiziell seit Ende 2023 (früher homebrew/autoupdate); tools.sh vertraut seinem Befehl per brew trust
 # Basis
 brew "git"
 brew "python"        # Skripte, die Agents schreiben

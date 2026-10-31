@@ -44,6 +44,8 @@ case "${1:-status}" in
     ;;
   _run)   # der eigentliche Auftrag, läuft im Hintergrund
     "$2" bundle --file "$HERE/Brewfile"
+    # Inoffizieller Tap: Homebrew lädt seinen Befehl erst nach ausdrücklichem Vertrauen
+    "$2" trust --command domt4/autoupdate/autoupdate || true
     "$2" autoupdate start 1d --upgrade --cleanup --leaves-only || true
     ;;
   status) report ;;
