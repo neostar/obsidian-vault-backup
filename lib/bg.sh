@@ -14,9 +14,12 @@ bg_init() {
 }
 
 bg_running() {
-  local pid=""
+  local pid="" cmd=""
   [[ -f "$BG_PIDF" ]] && pid="$(cat "$BG_PIDF" || true)"
-  [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null
+  [[ -n "$pid" ]] || return 1
+  # Nach einem Neustart kann die PID einem fremden Prozess gehören – nur unser Auftrag zählt
+  cmd="$(ps -p "$pid" -o command= 2>/dev/null || true)"
+  [[ "$cmd" == *"$BG_RC"* ]]
 }
 
 bg_start() {
