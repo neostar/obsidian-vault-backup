@@ -171,9 +171,14 @@ if [[ -f "$CFG" ]]; then
   B="$(/bin/bash -c 'source "$1"; printf "%s" "${BACKUP_ROOT:-}"' _ "$CFG" 2>/dev/null || true)"
   [[ -z "$B" ]] || BACKUP_ROOT="$B"
 fi
-# „~“ über eine Variable: bash 3.2 (macOS) behielte bei „\~“ den Backslash
+# Für die sed-Ersetzung: $HOME vorn → „~“ (nur als ganzer Ordner, nicht /Users/tim → /Users/timon),
+# dann \ / & | maskieren. „~“ über eine Variable: bash 3.2 (macOS) behielte bei „\~“ den Backslash.
 TILDE="~"
-esc() { printf '%s' "${1/#"$HOME"/$TILDE}" | /usr/bin/sed 's/[\/&|]/\\&/g'; }
+esc() {
+  local v="$1"
+  if [[ "$v" == "$HOME" || "$v" == "$HOME/"* ]]; then v="$TILDE${v#"$HOME"}"; fi
+  printf '%s' "$v" | /usr/bin/sed 's/[\\/&|]/\\&/g'
+}
 E_NAME="$(esc "$NAME")"; E_PATH="$(esc "$VAULT")"; E_BACKUP="$(esc "$BACKUP_ROOT")"
 render() {
   /usr/bin/sed -e "s|{{VAULT_NAME}}|$E_NAME|g" -e "s|{{VAULT_PATH}}|$E_PATH|g" \

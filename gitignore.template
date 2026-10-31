@@ -65,6 +65,8 @@ Attachments/
 # Plugin-Einstellungen (data.json) und manifest.json bleiben in Git.
 .obsidian/plugins/*/main.js
 .obsidian/plugins/*/styles.css
+# Automatische Sicherungen der Plugin-Einstellungen (z. B. Iconic) – Kopien von data.json
+.obsidian/plugins/*/data.json.backup*
 
 # Claudian: Chat-Metadaten ändern sich ständig – im Backup enthalten, nicht in Git
 .claudian/sessions/
