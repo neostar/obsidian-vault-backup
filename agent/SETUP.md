@@ -12,10 +12,11 @@ Du richtest den Mac einer oder eines Studierenden ein – meist aus Architektur,
 ## Arbeitsweise
 
 - Sprich Deutsch, freundlich, einfach und ohne Fachjargon. Die Person programmiert nicht; erkläre das *Warum* in einem Halbsatz („damit nichts verloren geht“).
-- Zeig zu Beginn in drei Sätzen den Plan: was passiert, was die Person selbst tut (ein paar Fragen über sich, einmal Passwort im Terminal, ein Ordner in Google Drive) und wie lange es dauert – etwa 30 Minuten plus die Downloads, die bei langsamem Internet bis zu einer Stunde brauchen. Die Fragen kommen zuerst, die Downloads danach.
+- Zeig zu Beginn in drei Sätzen den Plan: was passiert, was die Person selbst tut (ein paar Fragen über sich, einmal Passwort im Terminal, ein Ordner in Google Drive) und wie lange es dauert – etwa 30 Minuten plus die Downloads, die bei langsamem Internet bis zu einer Stunde brauchen. Die Fragen stellst du, während Homebrew lädt; die Werkzeuge laden im Hintergrund, während du die Vaults einrichtest.
 - Kündige jeden Schritt in einem Satz an und warte auf ein OK, bevor du etwas veränderst.
 - Bewahre alles Bestehende: Original-Vaults bleiben unangetastet, bis die Person sie selbst löscht; existiert ein Ziel schon, frag nach.
 - Setze Pfade in Befehlen immer in Anführungszeichen (Namen enthalten Leerzeichen, Umlaute, `&`) und starte Skripte mit `bash "<Skript>"`.
+- Führe nichts im Vordergrund aus, was länger als etwa eine Minute braucht: Claudian sperrt den Chat, bis der Befehl fertig ist, und die Person sieht nicht, wie lange es noch dauert. Lange Downloads laufen über `tools.sh` im Hintergrund.
 - Schreibt ein Skript ❌, halte an, erkläre die Meldung in einfachen Worten und löse sie gemeinsam, bevor du weitergehst.
 
 ## Schritte
@@ -32,30 +33,29 @@ Die Person hat schon mindestens einen Vault.
 
 **Fertig, wenn:** die Person die Vaults ausdrücklich genannt hat und du für jeden den alten Pfad und den neuen Pfad `~/Obsidian Vaults/<Name>` kennst.
 
-### 2. Interview, Teil 1: Fragen
+### 2. Homebrew
 
-Lies `PKG/agent/INTERVIEW.md` und führe **Teil 1** durch: die Fragen stellen und die Antworten sichern. Noch nichts installieren – die Person soll nicht vor laufenden Downloads warten, ohne zu wissen, wie lange es dauert.
-
-**Fertig, wenn:** die Antwortdatei aus `INTERVIEW.md` existiert und alle Fragen beantwortet oder ausgelassen sind.
-
-### 3. Homebrew
-
-Prüfe `/opt/homebrew/bin/brew --version` (Intel-Mac: `/usr/local/bin/brew`). Fehlt Homebrew: Die Installation braucht das Mac-Passwort, und das tippt nur die Person selbst. Bitte sie, das Programm „Terminal“ zu öffnen (⌘-Leertaste, „Terminal“) und genau diesen Befehl mit dem echten Pfad einzufügen: `bash "PKG/setup-homebrew.sh"`. Warte auf ihre Rückmeldung. Findet deine Shell `brew` danach nicht, nutze den vollen Pfad.
+Prüfe `/opt/homebrew/bin/brew --version` (Intel-Mac: `/usr/local/bin/brew`). Fehlt Homebrew: Die Installation braucht das Mac-Passwort, und das tippt nur die Person selbst. Bitte sie, das Programm „Terminal“ zu öffnen (⌘-Leertaste, „Terminal“) und genau diesen Befehl mit dem echten Pfad einzufügen: `bash "PKG/setup-homebrew.sh"`. Nach der Passwort-Eingabe lädt das Skript eine Weile (je nach Internet 5–20 Minuten) – die Person muss nur das Terminal offen lassen. Mach währenddessen mit Schritt 3 weiter und frag danach, ob im Terminal „Fertig“ steht. Findet deine Shell `brew` dann nicht, nutze den vollen Pfad.
 
 **Fertig, wenn:** `brew --version` (oder der volle Pfad) bei dir eine Version ausgibt.
 
-### 4. Werkzeuge
+### 3. Interview, Teil 1: Fragen
 
-Das ist der große Download (Python, pandoc, Bild-, PDF- und Video-Werkzeuge). Sag vorher, dass er je nach Internet 10–45 Minuten dauert und die Person nichts tun muss – der Mac sollte am Strom hängen und wach bleiben. Melde zwischendurch, welches Paket gerade dran ist. Dann:
+Lies `PKG/agent/INTERVIEW.md` und führe **Teil 1** durch: die Fragen stellen und die Antworten sichern – am besten, während Homebrew im Terminal lädt. So ist die Wartezeit sinnvoll genutzt.
+
+**Fertig, wenn:** die Antwortdatei aus `INTERVIEW.md` existiert und alle Fragen beantwortet oder ausgelassen sind.
+
+### 4. Werkzeuge im Hintergrund laden
+
+Der große Download (Python, pandoc, Bild-, PDF- und Video-Werkzeuge) läuft im Hintergrund, damit der Chat frei bleibt:
 
 ```
-brew bundle --file "PKG/Brewfile"
-brew autoupdate start 1d --upgrade --cleanup --leaves-only
+bash "PKG/tools.sh" start
 ```
 
-Der zweite Befehl hält die Werkzeuge täglich von selbst aktuell.
+Sag der Person, dass das je nach Internet 10–45 Minuten dauert, sie nichts tun muss und der Mac am Strom bleiben soll. Du machst derweil mit den nächsten Schritten weiter; `bash "PKG/tools.sh" status` zeigt dir jederzeit, welches Paket gerade dran ist. Nach dem Download schaltet das Skript die tägliche Aktualisierung ein.
 
-**Fertig, wenn:** `brew bundle check --file "PKG/Brewfile"` meldet, dass alles installiert ist, und `brew autoupdate status` einen laufenden Job zeigt.
+**Fertig, wenn:** `tools.sh start` „läuft im Hintergrund“ meldet (abgeschlossen wird in Schritt 10).
 
 ### 5. Agent-Skills
 
@@ -102,19 +102,29 @@ Dann für jeden Vault `bash "PKG/vault-setup.sh" "<neuer Pfad>"`. Das Skript öf
 
 **Fertig, wenn:** das Skript für jeden Vault mit „Fertig: <Name>“ endet.
 
-### 9. Interview, Teil 2: Eintragen
-
-Führe Teil 2 aus `PKG/agent/INTERVIEW.md` durch: Studienverlauf, Modulnotizen und Profil aus den gesicherten Antworten anlegen.
-
-**Fertig, wenn:** jede eingerichtete `Profil.md` die von der Person bestätigten Antworten enthält und – sofern sie einen Link zum Studienverlauf hatte – `Studium/Studienverlauf.md` und die Modulnotizen in `Studium/Module/` angelegt sind.
-
-### 10. Google Drive
+### 9. Google Drive
 
 Führe die Person Klick für Klick: Google Drive (Symbol in der Menüleiste) → Zahnrad → Einstellungen → „My Mac“ → „Add folder“ → im Finder ⌘⇧H, Ordner `Obsidian-Backup` wählen → „Sync with Google Drive“ → Fertig → Speichern. Hat sie kein Google Drive, sag es offen: Das Backup liegt dann nur auf diesem Mac; eine Alternative klärt sie mit der Kursleitung.
 
 **Fertig, wenn:** die Person unter „My Mac“ den Ordner „Obsidian-Backup“ mit einer Größe über 0 Bytes sieht.
 
-### 11. Prüfen und abschließen
+### 10. Werkzeuge abschließen
+
+`bash "PKG/tools.sh" status` zeigt den Stand:
+
+- **fertig** – weiter mit Schritt 11.
+- **läuft noch** – sag der Person, welches Paket gerade dran ist, und warte mit `bash "PKG/tools.sh" wait 60` höchstens eine Minute am Stück; berichte danach den Stand. Dauert es voraussichtlich noch länger als zehn Minuten, sag der Person, sie soll „weiter“ schreiben, sobald sie Zeit hat, und beende deine Antwort.
+- **Fehler** – erklär die letzten Zeilen in einfachen Worten; meist hilft ein erneutes `tools.sh start` (bereits Installiertes wird übersprungen).
+
+**Fertig, wenn:** `tools.sh status` „fertig installiert“ meldet, `brew bundle check --file "PKG/Brewfile"` alles als installiert zeigt und `brew autoupdate status` einen laufenden Job meldet.
+
+### 11. Interview, Teil 2: Eintragen
+
+Führe Teil 2 aus `PKG/agent/INTERVIEW.md` durch: Studienverlauf, Modulnotizen und Profil aus den gesicherten Antworten anlegen.
+
+**Fertig, wenn:** jede eingerichtete `Profil.md` die von der Person bestätigten Antworten enthält und – sofern sie einen Link zum Studienverlauf hatte – `Studium/Studienverlauf.md` und die Modulnotizen in `Studium/Module/` angelegt sind.
+
+### 12. Prüfen und abschließen
 
 Prüfe je Vault mit Befehlen: Log endet mit `FERTIG`; `~/Obsidian-Backup/<Name>/` enthält `vault/` und `vault.bundle`; `git -C "<neuer Pfad>" log --oneline` zeigt Commits.
 

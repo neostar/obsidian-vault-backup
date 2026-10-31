@@ -1,6 +1,6 @@
-# Werkzeuge für Agents – installiert mit:  brew bundle --file Brewfile
+# Werkzeuge für Agents – installiert im Hintergrund mit:  bash tools.sh start  (oder direkt: brew bundle --file Brewfile)
 # Automatische Updates (wird in agent/SETUP.md mit `brew autoupdate start` aktiviert)
-tap "homebrew/autoupdate"
+tap "domt4/autoupdate"   # früher homebrew/autoupdate – Homebrew folgt dem Umzug nicht mehr selbst
 # Basis
 brew "git"
 brew "python"        # Skripte, die Agents schreiben

@@ -4,8 +4,8 @@ Ziel: Jeder Agent, der später im Vault arbeitet, weiß aus `Profil.md`, für we
 
 Das Interview hat zwei Teile:
 
-- **Teil 1 – Fragen** (Setup-Schritt 2, gleich nach der Orientierung): Fragen stellen, Antworten sichern. Noch nichts installieren und nichts in den Vault schreiben – so ist die Person beschäftigt, bevor die langen Downloads laufen.
-- **Teil 2 – Eintragen** (Setup-Schritt 9, nach dem Einrichten der Vaults): Studienverlauf, Modulnotizen und Profil anlegen. Dafür braucht es die Werkzeuge (z. B. `pdftotext`) und die Vorlagen im Vault.
+- **Teil 1 – Fragen** (Setup-Schritt 3, während Homebrew im Terminal lädt): Fragen stellen, Antworten sichern. Noch nichts in den Vault schreiben.
+- **Teil 2 – Eintragen** (Setup-Schritt 11, nach dem Einrichten der Vaults und wenn die Werkzeuge fertig sind): Studienverlauf, Modulnotizen und Profil anlegen. Dafür braucht es die Werkzeuge (z. B. `pdftotext`) und die Vorlagen im Vault.
 
 Führe ein kurzes, freundliches Interview: eine Frage pro Nachricht, mit einem Beispiel als Hilfe. Übernimm die Antworten in den Worten der Person. „Möchte ich nicht sagen“ ist eine gültige Antwort – dann bleibt die Zeile leer. Halte das Profil schlank: Adresse, Matrikelnummer, Noten und Ähnliches gehören nicht hinein.
 
@@ -30,7 +30,7 @@ Für jeden eingerichteten Vault:
 
 ### Antworten sichern
 
-Schreib die Antworten nach jeder Frage in `~/Library/Application Support/obsidian-vault-setup-interview.md` (eine Überschrift je Frage, Vaults getrennt) – so überstehen sie einen Neustart von Obsidian. Die Datei liegt außerhalb des Paketordners, weil der beim Aktualisieren ersetzt wird. Sag der Person danach, dass jetzt die Downloads kommen und du die Antworten später einträgst.
+Schreib die Antworten nach jeder Frage in `~/Library/Application Support/obsidian-vault-setup-interview.md` (eine Überschrift je Frage, Vaults getrennt) – so überstehen sie einen Neustart von Obsidian. Die Datei liegt außerhalb des Paketordners, weil der beim Aktualisieren ersetzt wird. Sag der Person danach, dass du die Antworten einträgst, sobald Vaults und Werkzeuge bereit sind.
 
 **Fertig (Teil 1), wenn:** jede Frage beantwortet oder ausgelassen ist und die Datei die Antworten enthält.
 

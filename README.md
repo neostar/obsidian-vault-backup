@@ -26,11 +26,11 @@ Gedacht für Studierende ohne Programmierkenntnisse – z. B. Architektur oder S
 
 **Du selbst tust nur das:**
 
-- zuerst ein paar Fragen über dich und deinen Vault beantworten,
 - einmal einen Befehl ins Terminal kopieren und dein **Mac-Passwort** eingeben (für Homebrew, die Werkzeug-Verwaltung),
+- ein paar Fragen über dich und deinen Vault beantworten – während Homebrew lädt,
 - in **Google Drive** den Ordner `Obsidian-Backup` zum Hochladen auswählen.
 
-Dauer: etwa 30 Minuten, dazu die Downloads – bei langsamem Internet bis zu einer Stunde. Die Fragen kommen zuerst; während der Downloads musst du nichts tun.
+Dauer: etwa 30 Minuten, dazu die Downloads – bei langsamem Internet bis zu einer Stunde. Die Downloads laufen im Hintergrund; der Chat bleibt dabei frei.
 
 **Du brauchst:** einen eigenen Mac mit Admin-Rechten, Internet und [Google Drive für den Desktop](https://www.google.com/drive/download/).
 
@@ -56,6 +56,7 @@ Der Agent arbeitet [`agent/SETUP.md`](agent/SETUP.md) ab; das Interview steht in
 | Datei | Zweck |
 |---|---|
 | `setup-homebrew.sh` | installiert Homebrew (braucht das Passwort, läuft im Terminal) |
+| `tools.sh` | installiert die Werkzeuge aus dem `Brewfile` im Hintergrund und meldet den Stand |
 | `Brewfile` | Werkzeuge: Python (uv), Tabellen (DuckDB, Miller), Bilder, PDF, Layout, CAD, Video |
 | `install.sh` | Git in jedem Vault unter `~/Obsidian Vaults` + stündlicher Backup-Job |
 | `backup.sh` | das Backup selbst (läuft über launchd) |
