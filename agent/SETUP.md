@@ -1,6 +1,6 @@
 # Setup: Obsidian-Vaults mit Git, Backup und Agent-Werkzeugen
 
-Du richtest den Mac einer Architektur-Studentin oder eines -Studenten ein. Am Ende:
+Du richtest den Mac einer oder eines Studierenden ein – meist aus Architektur, Stadtplanung oder einem anderen Studiengang ohne Programmieren. Am Ende:
 
 - liegen die gewählten Vaults in `~/Obsidian Vaults/` und werden per Git versioniert,
 - sichert ein Hintergrund-Job sie stündlich nach `~/Obsidian-Backup`, und Google Drive lädt diesen Ordner hoch,
@@ -12,7 +12,7 @@ Du richtest den Mac einer Architektur-Studentin oder eines -Studenten ein. Am En
 ## Arbeitsweise
 
 - Sprich Deutsch, freundlich, einfach und ohne Fachjargon. Die Person programmiert nicht; erkläre das *Warum* in einem Halbsatz („damit nichts verloren geht“).
-- Zeig zu Beginn in drei Sätzen den Plan: was passiert, etwa 20–40 Minuten, und was die Person selbst tut (einmal Passwort im Terminal, ein Ordner in Google Drive, ein paar Fragen über sich).
+- Zeig zu Beginn in drei Sätzen den Plan: was passiert, was die Person selbst tut (ein paar Fragen über sich, einmal Passwort im Terminal, ein Ordner in Google Drive) und wie lange es dauert – etwa 30 Minuten plus die Downloads, die bei langsamem Internet bis zu einer Stunde brauchen. Die Fragen kommen zuerst, die Downloads danach.
 - Kündige jeden Schritt in einem Satz an und warte auf ein OK, bevor du etwas veränderst.
 - Bewahre alles Bestehende: Original-Vaults bleiben unangetastet, bis die Person sie selbst löscht; existiert ein Ziel schon, frag nach.
 - Setze Pfade in Befehlen immer in Anführungszeichen (Namen enthalten Leerzeichen, Umlaute, `&`) und starte Skripte mit `bash "<Skript>"`.
@@ -32,15 +32,21 @@ Die Person hat schon mindestens einen Vault.
 
 **Fertig, wenn:** die Person die Vaults ausdrücklich genannt hat und du für jeden den alten Pfad und den neuen Pfad `~/Obsidian Vaults/<Name>` kennst.
 
-### 2. Homebrew
+### 2. Interview, Teil 1: Fragen
+
+Lies `PKG/agent/INTERVIEW.md` und führe **Teil 1** durch: die Fragen stellen und die Antworten sichern. Noch nichts installieren – die Person soll nicht vor laufenden Downloads warten, ohne zu wissen, wie lange es dauert.
+
+**Fertig, wenn:** die Antwortdatei aus `INTERVIEW.md` existiert und alle Fragen beantwortet oder ausgelassen sind.
+
+### 3. Homebrew
 
 Prüfe `/opt/homebrew/bin/brew --version` (Intel-Mac: `/usr/local/bin/brew`). Fehlt Homebrew: Die Installation braucht das Mac-Passwort, und das tippt nur die Person selbst. Bitte sie, das Programm „Terminal“ zu öffnen (⌘-Leertaste, „Terminal“) und genau diesen Befehl mit dem echten Pfad einzufügen: `bash "PKG/setup-homebrew.sh"`. Warte auf ihre Rückmeldung. Findet deine Shell `brew` danach nicht, nutze den vollen Pfad.
 
 **Fertig, wenn:** `brew --version` (oder der volle Pfad) bei dir eine Version ausgibt.
 
-### 3. Werkzeuge
+### 4. Werkzeuge
 
-Sag vorher, dass das 5–15 Minuten dauert. Dann:
+Das ist der große Download (Python, pandoc, Bild-, PDF- und Video-Werkzeuge). Sag vorher, dass er je nach Internet 10–45 Minuten dauert und die Person nichts tun muss – der Mac sollte am Strom hängen und wach bleiben. Melde zwischendurch, welches Paket gerade dran ist. Dann:
 
 ```
 brew bundle --file "PKG/Brewfile"
@@ -51,7 +57,7 @@ Der zweite Befehl hält die Werkzeuge täglich von selbst aktuell.
 
 **Fertig, wenn:** `brew bundle check --file "PKG/Brewfile"` meldet, dass alles installiert ist, und `brew autoupdate status` einen laufenden Job zeigt.
 
-### 4. Agent-Skills
+### 5. Agent-Skills
 
 Die Skills von Matt Pocock (`teach`, `grill-with-docs`, `wayfinder`, `prototype`, `retro` …) gibt es für Claude Code und Codex. Prüfe, welche der beiden Kommandozeilen da sind (`command -v claude`, `command -v codex`; sonst unter `~/.local/bin/`, `~/.claude/local/` und `/opt/homebrew/bin/`), und installiere für jede vorhandene – auch für beide, wenn die Person in Claudian zwischen ihnen wechselt:
 
@@ -69,7 +75,7 @@ Findest du keine der beiden, frag die Person, mit welchem Agent sie arbeitet. Di
 
 **Fertig, wenn:** für jeden vorhandenen Agent beide Befehle ohne Fehler durchliefen – bei Claude Code zeigt `claude plugin list` den Eintrag `mattpocock-skills@mattpocock` als aktiv.
 
-### 5. Vaults kopieren
+### 6. Vaults kopieren
 
 Für jeden gewählten Vault, der noch nicht in `~/Obsidian Vaults` liegt: Größe und Dateianzahl nennen, dann kopieren – das Original bleibt als Sicherheit liegen:
 
@@ -82,33 +88,33 @@ Hat die Kopie weniger Dateien, lagen manche nur online: Bitte die Person, den Or
 
 **Fertig, wenn:** jede Kopie dieselbe Dateianzahl hat wie ihr Original (`find "<Pfad>" -type f | wc -l`).
 
-### 6. Git und Backup
+### 7. Git und Backup
 
 `bash "PKG/install.sh"` richtet Git in jedem Vault unter `~/Obsidian Vaults` ein und startet das stündliche Backup. Erkläre die Ausgabe in zwei, drei Sätzen. macOS meldet dabei „bash can run in the background“ – das ist das Backup; es muss eingeschaltet bleiben.
 
 **Fertig, wenn:** die Ausgabe „Stündliches Backup eingerichtet“ und „Testlauf erfolgreich“ enthält. (Direkt danach startet das erste reguläre Backup im Hintergrund; das Log kann deshalb kurz mitten in einem Lauf stehen.)
 
-### 7. Obsidian einrichten – pro Vault
+### 8. Obsidian einrichten – pro Vault
 
-Prüfe die Obsidian CLI: `/Applications/Obsidian.app/Contents/MacOS/obsidian version`. Antwortet sie nicht, führe die Person hin: Obsidian → Einstellungen → Allgemein → „Command line interface“ einschalten und die Abfrage bestätigen. Prüfe dann erneut. Nur wenn sie weiter nicht antwortet, ist ein Neustart von Obsidian nötig – und der beendet diesen Chat. Sag deshalb **vorher**: „Nach dem Neustart öffne Claudian, wähle im Chat-Verlauf diesen Chat und schreib ‚weiter mit Schritt 7‘.“ Erst dann ⌘Q und Obsidian neu öffnen.
+Prüfe die Obsidian CLI: `/Applications/Obsidian.app/Contents/MacOS/obsidian version`. Antwortet sie nicht, führe die Person hin: Obsidian → Einstellungen → Allgemein → „Command line interface“ einschalten und die Abfrage bestätigen. Prüfe dann erneut. Nur wenn sie weiter nicht antwortet, ist ein Neustart von Obsidian nötig – und der beendet diesen Chat. Sag deshalb **vorher**: „Nach dem Neustart öffne Claudian, wähle im Chat-Verlauf diesen Chat und schreib ‚weiter mit Schritt 8‘.“ Erst dann ⌘Q und Obsidian neu öffnen.
 
 Dann für jeden Vault `bash "PKG/vault-setup.sh" "<neuer Pfad>"`. Das Skript öffnet den Vault in einem eigenen Obsidian-Fenster, installiert die Plugins, stellt das Git-Plugin auf „Commit alle 10 Minuten“, legt `AGENTS.md` (mit `CLAUDE.md` als Verweis für Claude Code), `docs/agents/` und die Einführung „Mit Claudian arbeiten“ an, ordnet Anhänge künftig je Notiz in eigene Ordner unter `Attachments/` und setzt Symbole für Ordner und Notizen. Fragt Obsidian, ob es dem Vault vertrauen soll, bitte die Person, „Vertrauen“ zu klicken. Liegen im Vault schon lose Bilder oder PDFs (z. B. „Pasted image …“ direkt in `Attachments/` oder im Vault-Root), biete an, sie einmal aufzuräumen – wie in der `AGENTS.md` des Vaults unter „Aufräumen“ beschrieben.
 
 **Fertig, wenn:** das Skript für jeden Vault mit „Fertig: <Name>“ endet.
 
-### 8. Interview
+### 9. Interview, Teil 2: Eintragen
 
-Lies `PKG/agent/INTERVIEW.md` und führe es durch.
+Führe Teil 2 aus `PKG/agent/INTERVIEW.md` durch: Studienverlauf, Modulnotizen und Profil aus den gesicherten Antworten anlegen.
 
 **Fertig, wenn:** jede eingerichtete `Profil.md` die von der Person bestätigten Antworten enthält und – sofern sie einen Link zum Studienverlauf hatte – `Studium/Studienverlauf.md` und die Modulnotizen in `Studium/Module/` angelegt sind.
 
-### 9. Google Drive
+### 10. Google Drive
 
 Führe die Person Klick für Klick: Google Drive (Symbol in der Menüleiste) → Zahnrad → Einstellungen → „My Mac“ → „Add folder“ → im Finder ⌘⇧H, Ordner `Obsidian-Backup` wählen → „Sync with Google Drive“ → Fertig → Speichern. Hat sie kein Google Drive, sag es offen: Das Backup liegt dann nur auf diesem Mac; eine Alternative klärt sie mit der Kursleitung.
 
 **Fertig, wenn:** die Person unter „My Mac“ den Ordner „Obsidian-Backup“ mit einer Größe über 0 Bytes sieht.
 
-### 10. Prüfen und abschließen
+### 11. Prüfen und abschließen
 
 Prüfe je Vault mit Befehlen: Log endet mit `FERTIG`; `~/Obsidian-Backup/<Name>/` enthält `vault/` und `vault.bundle`; `git -C "<neuer Pfad>" log --oneline` zeigt Commits.
 

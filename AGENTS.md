@@ -1,6 +1,6 @@
 # obsidian-vault-backup
 
-Setup-Paket für Obsidian-Vaults auf dem Mac: Git (Obsidian Git Plugin) + stündliches Backup per `launchd` nach `~/Obsidian-Backup`, synchronisiert über Google Drive „My Mac“. Zielgruppe: Architektur-Studierende. Einstieg für Nutzer: `README.md`; Ablauf des Agents: `agent/SETUP.md`. Die Anleitungen richten sich an jeden Agent (Claude Code, Codex): keine Claude-spezifischen Begriffe, Skills mit beiden Aufrufen (`/mattpocock-skills:<name>`, `$<name>`), Anweisungen in `AGENTS.md` (`CLAUDE.md` verweist nur darauf). Lokale Planung (nicht versioniert, nur beim Maintainer): `PLAN.md`, Specs unter `.scratch/`.
+Setup-Paket für Obsidian-Vaults auf dem Mac: Git (Obsidian Git Plugin) + stündliches Backup per `launchd` nach `~/Obsidian-Backup`, synchronisiert über Google Drive „My Mac“. Zielgruppe: Studierende ohne Programmierkenntnisse (z. B. Architektur, Stadtplanung). Einstieg für Nutzer: `README.md`; Ablauf des Agents: `agent/SETUP.md`. Die Anleitungen richten sich an jeden Agent (Claude Code, Codex): keine Claude-spezifischen Begriffe, Skills mit beiden Aufrufen (`/mattpocock-skills:<name>`, `$<name>`), Anweisungen in `AGENTS.md` (`CLAUDE.md` verweist nur darauf). Lokale Planung (nicht versioniert, nur beim Maintainer): `PLAN.md`, Specs unter `.scratch/`.
 
 ## Agent skills
 

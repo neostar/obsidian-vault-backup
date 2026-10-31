@@ -2,7 +2,7 @@
 
 Dein Obsidian-Vault – versioniert, gesichert und bereit für die Arbeit mit einem KI-Agent – Claude oder Codex. Der Agent richtet alles ein; du beantwortest ein paar Fragen und klickst an zwei Stellen.
 
-Gedacht für Architektur-Studierende auf dem Mac.
+Gedacht für Studierende ohne Programmierkenntnisse – z. B. Architektur oder Stadtplanung – auf dem Mac.
 
 ## Was du bekommst
 
@@ -26,11 +26,11 @@ Gedacht für Architektur-Studierende auf dem Mac.
 
 **Du selbst tust nur das:**
 
+- zuerst ein paar Fragen über dich und deinen Vault beantworten,
 - einmal einen Befehl ins Terminal kopieren und dein **Mac-Passwort** eingeben (für Homebrew, die Werkzeug-Verwaltung),
-- in **Google Drive** den Ordner `Obsidian-Backup` zum Hochladen auswählen,
-- ein paar Fragen über dich und deinen Vault beantworten.
+- in **Google Drive** den Ordner `Obsidian-Backup` zum Hochladen auswählen.
 
-Dauer: etwa 20–40 Minuten.
+Dauer: etwa 30 Minuten, dazu die Downloads – bei langsamem Internet bis zu einer Stunde. Die Fragen kommen zuerst; während der Downloads musst du nichts tun.
 
 **Du brauchst:** einen eigenen Mac mit Admin-Rechten, Internet und [Google Drive für den Desktop](https://www.google.com/drive/download/).
 

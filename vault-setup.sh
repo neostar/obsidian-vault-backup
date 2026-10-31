@@ -171,7 +171,9 @@ if [[ -f "$CFG" ]]; then
   B="$(/bin/bash -c 'source "$1"; printf "%s" "${BACKUP_ROOT:-}"' _ "$CFG" 2>/dev/null || true)"
   [[ -z "$B" ]] || BACKUP_ROOT="$B"
 fi
-esc() { printf '%s' "${1/#$HOME/\~}" | /usr/bin/sed 's/[\/&|]/\\&/g'; }
+# „~“ über eine Variable: bash 3.2 (macOS) behielte bei „\~“ den Backslash
+TILDE="~"
+esc() { printf '%s' "${1/#"$HOME"/$TILDE}" | /usr/bin/sed 's/[\/&|]/\\&/g'; }
 E_NAME="$(esc "$NAME")"; E_PATH="$(esc "$VAULT")"; E_BACKUP="$(esc "$BACKUP_ROOT")"
 render() {
   /usr/bin/sed -e "s|{{VAULT_NAME}}|$E_NAME|g" -e "s|{{VAULT_PATH}}|$E_PATH|g" \
