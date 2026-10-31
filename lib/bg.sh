@@ -5,7 +5,7 @@
 #   bg_init <name>          Zustandsdateien ~/Library/Logs/obsidian-vault-setup-<name>.{log,rc,pid}
 #   bg_start <befehl> …     startet den Befehl; Exit-Code landet in BG_RC
 #   bg_state                0 fertig, 1 Fehler, 3 läuft, 4 nicht gestartet
-#   bg_wait <sekunden>      wartet höchstens so lange, dann wie bg_state
+# Bewusst ohne Warten: Auch kurzes Warten im Agent-Turn sperrt in Claudian die Eingabe.
 
 bg_init() {
   local s="$HOME/Library/Logs/obsidian-vault-setup-$1"
@@ -40,11 +40,4 @@ bg_state() {
   # shellcheck disable=SC2310
   bg_running && return 3
   return 4
-}
-
-bg_wait() {
-  local end=$((SECONDS + ${1:-60}))
-  # shellcheck disable=SC2310
-  while [[ ! -f "$BG_RC" ]] && bg_running && ((SECONDS < end)); do sleep 5; done
-  bg_state
 }

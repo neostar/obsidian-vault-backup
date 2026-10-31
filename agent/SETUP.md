@@ -12,12 +12,12 @@ Du richtest den Mac einer oder eines Studierenden ein – meist aus Architektur,
 ## Arbeitsweise
 
 - Sprich Deutsch, freundlich, einfach und ohne Fachjargon. Die Person programmiert nicht; erkläre das *Warum* in einem Halbsatz („damit nichts verloren geht“).
-- Zeig zu Beginn in drei Sätzen den Plan: was passiert, was die Person selbst tut (ein paar Fragen über sich, einmal Passwort im Terminal, ein Ordner in Google Drive) und wie lange es dauert – etwa 30 Minuten plus die Downloads, die bei langsamem Internet bis zu einer Stunde brauchen. Die Fragen stellst du, während Homebrew lädt; die Werkzeuge laden im Hintergrund, während du die Vaults einrichtest.
+- Zeig zu Beginn in drei Sätzen den Plan: was passiert, was die Person selbst tut (ein paar Fragen über sich, einmal Passwort im Terminal, ein Ordner in Google Drive) und wie lange es dauert – etwa 30 Minuten plus die Downloads, die bei langsamem Internet bis zu einer Stunde brauchen. Zuerst kommen die Fragen, danach die Downloads; die laden im Hintergrund, während du die Vaults einrichtest.
 - Kündige jeden Schritt in einem Satz an und warte auf ein OK, bevor du etwas veränderst.
 - Bewahre alles Bestehende: Original-Vaults bleiben unangetastet, bis die Person sie selbst löscht; existiert ein Ziel schon, frag nach.
 - Setze Pfade in Befehlen immer in Anführungszeichen (Namen enthalten Leerzeichen, Umlaute, `&`) und starte Skripte mit `bash "<Skript>"`.
 - Führe nichts im Vordergrund aus, was länger als etwa eine Minute braucht: Claudian sperrt den Chat, bis der Befehl fertig ist, und die Person sieht nicht, wie lange es noch dauert. Lange Downloads und Kopien laufen über `tools.sh` und `copy-vault.sh` im Hintergrund.
-- **Auf einen Hintergrund-Auftrag warten:** `bash "PKG/<skript>" wait 60` wartet höchstens eine Minute und meldet den Stand – sag ihn der Person in einem Satz und wiederhole. Dauert es voraussichtlich noch länger als zehn Minuten, bitte sie, „weiter“ zu schreiben, sobald sie Zeit hat, und beende deine Antwort.
+- **Nie im Chat warten.** Auch kurzes Warten (`sleep`, Warteschleifen) sperrt die Eingabe der Person. Frag den Stand eines Hintergrund-Auftrags nur mit `bash "PKG/<skript>" status` ab. Läuft er noch, mach mit einem Schritt weiter, der nicht davon abhängt – oder beende deine Antwort mit Stand und Schätzung („Die Werkzeuge laden noch, etwa 10 Minuten. Schreib ‚weiter‘, dann mache ich weiter.“).
 - Schreibt ein Skript ❌, halte an, erkläre die Meldung in einfachen Worten und löse sie gemeinsam, bevor du weitergehst.
 
 ## Schritte
@@ -34,17 +34,17 @@ Die Person hat schon mindestens einen Vault.
 
 **Fertig, wenn:** die Person die Vaults ausdrücklich genannt hat und du für jeden den alten Pfad und den neuen Pfad `~/Obsidian Vaults/<Name>` kennst.
 
-### 2. Homebrew
+### 2. Interview, Teil 1: Fragen
 
-Prüfe `/opt/homebrew/bin/brew --version` (Intel-Mac: `/usr/local/bin/brew`). Fehlt Homebrew: Die Installation braucht das Mac-Passwort, und das tippt nur die Person selbst. Bitte sie, das Programm „Terminal“ zu öffnen (⌘-Leertaste, „Terminal“) und genau diesen Befehl mit dem echten Pfad einzufügen: `bash "PKG/setup-homebrew.sh"`. Nach der Passwort-Eingabe lädt das Skript eine Weile (je nach Internet 5–20 Minuten) – die Person muss nur das Terminal offen lassen. Mach währenddessen mit Schritt 3 weiter und frag danach, ob im Terminal „Fertig“ steht. Findet deine Shell `brew` dann nicht, nutze den vollen Pfad.
-
-**Fertig, wenn:** `brew --version` (oder der volle Pfad) bei dir eine Version ausgibt.
-
-### 3. Interview, Teil 1: Fragen
-
-Lies `PKG/agent/INTERVIEW.md` und führe **Teil 1** durch: die Fragen stellen und die Antworten sichern – am besten, während Homebrew im Terminal lädt. So ist die Wartezeit sinnvoll genutzt.
+Lies `PKG/agent/INTERVIEW.md` und führe **Teil 1** durch: die Fragen stellen und die Antworten sichern. Noch nichts installieren oder herunterladen – so kommt die Person zuerst zu Wort und wartet nicht vor einem gesperrten Chat.
 
 **Fertig, wenn:** die Antwortdatei aus `INTERVIEW.md` existiert und alle Fragen beantwortet oder ausgelassen sind.
+
+### 3. Homebrew
+
+Prüfe `/opt/homebrew/bin/brew --version` (Intel-Mac: `/usr/local/bin/brew`). Fehlt Homebrew: Die Installation braucht das Mac-Passwort, und das tippt nur die Person selbst. Bitte sie, das Programm „Terminal“ zu öffnen (⌘-Leertaste, „Terminal“) und genau diesen Befehl mit dem echten Pfad einzufügen: `bash "PKG/setup-homebrew.sh"`. Nach der Passwort-Eingabe lädt das Skript eine Weile (je nach Internet 5–20 Minuten) im Terminal – dein Chat bleibt dabei frei. Beende deine Antwort mit der Bitte, dir zu schreiben, sobald im Terminal „Fertig“ steht. Findet deine Shell `brew` dann nicht, nutze den vollen Pfad.
+
+**Fertig, wenn:** `brew --version` (oder der volle Pfad) bei dir eine Version ausgibt.
 
 ### 4. Werkzeuge im Hintergrund laden
 
@@ -90,7 +90,7 @@ Findest du keine der beiden, frag die Person, mit welchem Agent sie arbeitet. Di
 
 ### 7. Git und Backup
 
-Erst wenn `bash "PKG/copy-vault.sh" status` „Kopiert und geprüft“ meldet (sonst warten wie unter „Arbeitsweise“ beschrieben): `bash "PKG/install.sh"` richtet Git in jedem Vault unter `~/Obsidian Vaults` ein und startet das stündliche Backup. Erkläre die Ausgabe in zwei, drei Sätzen. macOS meldet dabei „bash can run in the background“ – das ist das Backup; es muss eingeschaltet bleiben.
+Erst wenn `bash "PKG/copy-vault.sh" status` „Kopiert und geprüft“ meldet (läuft es noch: siehe „Nie im Chat warten“ unter „Arbeitsweise“): `bash "PKG/install.sh"` richtet Git in jedem Vault unter `~/Obsidian Vaults` ein und startet das stündliche Backup. Erkläre die Ausgabe in zwei, drei Sätzen. macOS meldet dabei „bash can run in the background“ – das ist das Backup; es muss eingeschaltet bleiben.
 
 **Fertig, wenn:** `copy-vault.sh status` „Kopiert und geprüft“ meldete und die Ausgabe „Stündliches Backup eingerichtet“ und „Testlauf erfolgreich“ enthält. (Direkt danach startet das erste reguläre Backup im Hintergrund; das Log kann deshalb kurz mitten in einem Lauf stehen.)
 
@@ -113,7 +113,7 @@ Führe die Person Klick für Klick: Google Drive (Symbol in der Menüleiste) →
 `bash "PKG/tools.sh" status` zeigt den Stand:
 
 - **fertig** – weiter mit Schritt 11.
-- **läuft noch** – sag der Person, welches Paket gerade dran ist, und warte wie unter „Arbeitsweise“ beschrieben (`tools.sh wait 60`).
+- **läuft noch** – sag der Person, welches Paket gerade dran ist und wie viele noch fehlen, und beende deine Antwort mit der Bitte um „weiter“ (siehe „Nie im Chat warten“).
 - **Fehler** – erklär die letzten Zeilen in einfachen Worten; meist hilft ein erneutes `tools.sh start` (bereits Installiertes wird übersprungen).
 
 **Fertig, wenn:** `tools.sh status` „fertig installiert“ meldet, `brew bundle check --file "PKG/Brewfile"` alles als installiert zeigt und `brew autoupdate status` einen laufenden Job meldet.

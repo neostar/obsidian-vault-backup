@@ -6,8 +6,7 @@
 # Verwendung:
 #   ./copy-vault.sh start "<alt>" "<neu>" ["<alt2>" "<neu2>" …]
 #   ./copy-vault.sh status    Fortschritt: kopierte von insgesamt Dateien
-#   ./copy-vault.sh wait [Sek.]
-# Exit-Codes von status/wait: 0 fertig und vollständig, 1 Fehler oder unvollständig,
+# Exit-Codes von status: 0 fertig und vollständig, 1 Fehler oder unvollständig,
 # 3 läuft noch, 4 nicht gestartet.
 set -euo pipefail
 
@@ -70,6 +69,5 @@ case "${1:-status}" in
     exit "$rc"
     ;;
   status) report ;;
-  wait) bg_wait "${2:-60}" || true; report ;;
-  *) echo "Verwendung: $0 start \"<alt>\" \"<neu>\" … | status | wait [Sekunden]" >&2; exit 2 ;;
+  *) echo "Verwendung: $0 start \"<alt>\" \"<neu>\" … | status" >&2; exit 2 ;;
 esac

@@ -4,7 +4,7 @@ Ziel: Jeder Agent, der später im Vault arbeitet, weiß aus `Profil.md`, für we
 
 Das Interview hat zwei Teile:
 
-- **Teil 1 – Fragen** (Setup-Schritt 3, während Homebrew im Terminal lädt): Fragen stellen, Antworten sichern. Noch nichts in den Vault schreiben.
+- **Teil 1 – Fragen** (Setup-Schritt 2, gleich nach der Orientierung, vor allen Downloads): Fragen stellen, Antworten sichern. Noch nichts in den Vault schreiben.
 - **Teil 2 – Eintragen** (Setup-Schritt 11, nach dem Einrichten der Vaults und wenn die Werkzeuge fertig sind): Studienverlauf, Modulnotizen und Profil anlegen. Dafür braucht es die Werkzeuge (z. B. `pdftotext`) und die Vorlagen im Vault.
 
 Führe ein kurzes, freundliches Interview: eine Frage pro Nachricht, mit einem Beispiel als Hilfe. Übernimm die Antworten in den Worten der Person. „Möchte ich nicht sagen“ ist eine gültige Antwort – dann bleibt die Zeile leer. Halte das Profil schlank: Adresse, Matrikelnummer, Noten und Ähnliches gehören nicht hinein.

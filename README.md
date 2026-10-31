@@ -26,8 +26,8 @@ Gedacht für Studierende ohne Programmierkenntnisse – z. B. Architektur oder S
 
 **Du selbst tust nur das:**
 
+- zuerst ein paar Fragen über dich und deinen Vault beantworten,
 - einmal einen Befehl ins Terminal kopieren und dein **Mac-Passwort** eingeben (für Homebrew, die Werkzeug-Verwaltung),
-- ein paar Fragen über dich und deinen Vault beantworten – während Homebrew lädt,
 - in **Google Drive** den Ordner `Obsidian-Backup` zum Hochladen auswählen.
 
 Dauer: etwa 30 Minuten, dazu die Downloads – bei langsamem Internet bis zu einer Stunde. Downloads und das Kopieren großer Vaults laufen im Hintergrund; der Chat bleibt dabei frei.

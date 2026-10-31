@@ -4,8 +4,7 @@
 # Verwendung:
 #   ./tools.sh start          startet die Installation und kehrt sofort zurück
 #   ./tools.sh status         läuft / fertig / Fehler, mit dem aktuellen Paket
-#   ./tools.sh wait [Sek.]    wartet höchstens so lange (Standard 60), dann wie status
-# Exit-Codes von status/wait: 0 fertig, 1 Fehler, 3 läuft noch, 4 nicht gestartet.
+# Exit-Codes von status: 0 fertig, 1 Fehler, 3 läuft noch, 4 nicht gestartet.
 # Nach Erfolg schaltet es die tägliche Aktualisierung ein (brew autoupdate).
 set -euo pipefail
 
@@ -48,6 +47,5 @@ case "${1:-status}" in
     "$2" autoupdate start 1d --upgrade --cleanup --leaves-only || true
     ;;
   status) report ;;
-  wait) bg_wait "${2:-60}" || true; report ;;
-  *) echo "Verwendung: $0 start | status | wait [Sekunden]" >&2; exit 2 ;;
+  *) echo "Verwendung: $0 start | status" >&2; exit 2 ;;
 esac
