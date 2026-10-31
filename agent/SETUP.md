@@ -16,7 +16,8 @@ Du richtest den Mac einer oder eines Studierenden ein – meist aus Architektur,
 - Kündige jeden Schritt in einem Satz an und warte auf ein OK, bevor du etwas veränderst.
 - Bewahre alles Bestehende: Original-Vaults bleiben unangetastet, bis die Person sie selbst löscht; existiert ein Ziel schon, frag nach.
 - Setze Pfade in Befehlen immer in Anführungszeichen (Namen enthalten Leerzeichen, Umlaute, `&`) und starte Skripte mit `bash "<Skript>"`.
-- Führe nichts im Vordergrund aus, was länger als etwa eine Minute braucht: Claudian sperrt den Chat, bis der Befehl fertig ist, und die Person sieht nicht, wie lange es noch dauert. Lange Downloads laufen über `tools.sh` im Hintergrund.
+- Führe nichts im Vordergrund aus, was länger als etwa eine Minute braucht: Claudian sperrt den Chat, bis der Befehl fertig ist, und die Person sieht nicht, wie lange es noch dauert. Lange Downloads und Kopien laufen über `tools.sh` und `copy-vault.sh` im Hintergrund.
+- **Auf einen Hintergrund-Auftrag warten:** `bash "PKG/<skript>" wait 60` wartet höchstens eine Minute und meldet den Stand – sag ihn der Person in einem Satz und wiederhole. Dauert es voraussichtlich noch länger als zehn Minuten, bitte sie, „weiter“ zu schreiben, sobald sie Zeit hat, und beende deine Antwort.
 - Schreibt ein Skript ❌, halte an, erkläre die Meldung in einfachen Worten und löse sie gemeinsam, bevor du weitergehst.
 
 ## Schritte
@@ -57,7 +58,19 @@ Sag der Person, dass das je nach Internet 10–45 Minuten dauert, sie nichts tun
 
 **Fertig, wenn:** `tools.sh start` „läuft im Hintergrund“ meldet (abgeschlossen wird in Schritt 10).
 
-### 5. Agent-Skills
+### 5. Vaults kopieren – im Hintergrund
+
+Für jeden gewählten Vault, der noch nicht in `~/Obsidian Vaults` liegt: Größe und Dateianzahl nennen. Liegt er in Google Drive oder iCloud, sag dazu, dass Dateien, die nur online liegen, beim Kopieren heruntergeladen werden – bei langsamem Internet kann das dauern. Dann alle in einem Auftrag kopieren; das Original bleibt als Sicherheit liegen:
+
+```
+bash "PKG/copy-vault.sh" start "<alt>" "<neu>" ["<alt2>" "<neu2>" …]
+```
+
+Weiter mit Schritt 6, während kopiert wird; `copy-vault.sh status` zeigt „x von y Dateien“. Meldet es am Ende „nicht vollständig“, lagen Dateien nur online: Bitte die Person, den Originalordner im Finder auf „Offline verfügbar“ bzw. „Geladen lassen“ zu stellen, entferne die unvollständige Kopie nach Rückfrage und starte erneut.
+
+**Fertig, wenn:** `copy-vault.sh start` „läuft im Hintergrund“ meldet (geprüft wird in Schritt 7).
+
+### 6. Agent-Skills (während kopiert wird)
 
 Die Skills von Matt Pocock (`teach`, `grill-with-docs`, `wayfinder`, `prototype`, `retro` …) gibt es für Claude Code und Codex. Prüfe, welche der beiden Kommandozeilen da sind (`command -v claude`, `command -v codex`; sonst unter `~/.local/bin/`, `~/.claude/local/` und `/opt/homebrew/bin/`), und installiere für jede vorhandene – auch für beide, wenn die Person in Claudian zwischen ihnen wechselt:
 
@@ -75,30 +88,17 @@ Findest du keine der beiden, frag die Person, mit welchem Agent sie arbeitet. Di
 
 **Fertig, wenn:** für jeden vorhandenen Agent beide Befehle ohne Fehler durchliefen – bei Claude Code zeigt `claude plugin list` den Eintrag `mattpocock-skills@mattpocock` als aktiv.
 
-### 6. Vaults kopieren
-
-Für jeden gewählten Vault, der noch nicht in `~/Obsidian Vaults` liegt: Größe und Dateianzahl nennen, dann kopieren – das Original bleibt als Sicherheit liegen:
-
-```
-mkdir -p ~/"Obsidian Vaults"
-ditto "<alt>" "<neu>"
-```
-
-Hat die Kopie weniger Dateien, lagen manche nur online: Bitte die Person, den Originalordner im Finder auf „Offline verfügbar“ bzw. „Geladen lassen“ zu stellen, entferne die unvollständige Kopie nach Rückfrage und kopiere erneut.
-
-**Fertig, wenn:** jede Kopie dieselbe Dateianzahl hat wie ihr Original (`find "<Pfad>" -type f | wc -l`).
-
 ### 7. Git und Backup
 
-`bash "PKG/install.sh"` richtet Git in jedem Vault unter `~/Obsidian Vaults` ein und startet das stündliche Backup. Erkläre die Ausgabe in zwei, drei Sätzen. macOS meldet dabei „bash can run in the background“ – das ist das Backup; es muss eingeschaltet bleiben.
+Erst wenn `bash "PKG/copy-vault.sh" status` „Kopiert und geprüft“ meldet (sonst warten wie unter „Arbeitsweise“ beschrieben): `bash "PKG/install.sh"` richtet Git in jedem Vault unter `~/Obsidian Vaults` ein und startet das stündliche Backup. Erkläre die Ausgabe in zwei, drei Sätzen. macOS meldet dabei „bash can run in the background“ – das ist das Backup; es muss eingeschaltet bleiben.
 
-**Fertig, wenn:** die Ausgabe „Stündliches Backup eingerichtet“ und „Testlauf erfolgreich“ enthält. (Direkt danach startet das erste reguläre Backup im Hintergrund; das Log kann deshalb kurz mitten in einem Lauf stehen.)
+**Fertig, wenn:** `copy-vault.sh status` „Kopiert und geprüft“ meldete und die Ausgabe „Stündliches Backup eingerichtet“ und „Testlauf erfolgreich“ enthält. (Direkt danach startet das erste reguläre Backup im Hintergrund; das Log kann deshalb kurz mitten in einem Lauf stehen.)
 
 ### 8. Obsidian einrichten – pro Vault
 
 Prüfe die Obsidian CLI: `/Applications/Obsidian.app/Contents/MacOS/obsidian version`. Antwortet sie nicht, führe die Person hin: Obsidian → Einstellungen → Allgemein → „Command line interface“ einschalten und die Abfrage bestätigen. Prüfe dann erneut. Nur wenn sie weiter nicht antwortet, ist ein Neustart von Obsidian nötig – und der beendet diesen Chat. Sag deshalb **vorher**: „Nach dem Neustart öffne Claudian, wähle im Chat-Verlauf diesen Chat und schreib ‚weiter mit Schritt 8‘.“ Erst dann ⌘Q und Obsidian neu öffnen.
 
-Dann für jeden Vault `bash "PKG/vault-setup.sh" "<neuer Pfad>"`. Das Skript öffnet den Vault in einem eigenen Obsidian-Fenster, installiert die Plugins, stellt das Git-Plugin auf „Commit alle 10 Minuten“, legt `AGENTS.md` (mit `CLAUDE.md` als Verweis für Claude Code), `docs/agents/` und die Einführung „Mit Claudian arbeiten“ an, ordnet Anhänge künftig je Notiz in eigene Ordner unter `Attachments/` und setzt Symbole für Ordner und Notizen. Fragt Obsidian, ob es dem Vault vertrauen soll, bitte die Person, „Vertrauen“ zu klicken. Liegen im Vault schon lose Bilder oder PDFs (z. B. „Pasted image …“ direkt in `Attachments/` oder im Vault-Root), biete an, sie einmal aufzuräumen – wie in der `AGENTS.md` des Vaults unter „Aufräumen“ beschrieben.
+Dann für jeden Vault `bash "PKG/vault-setup.sh" "<neuer Pfad>"`. Sag vorher, dass es 1–3 Minuten dauert und der Chat so lange beschäftigt ist (es lädt neun Plugins). Das Skript öffnet den Vault in einem eigenen Obsidian-Fenster, installiert die Plugins, stellt das Git-Plugin auf „Commit alle 10 Minuten“, legt `AGENTS.md` (mit `CLAUDE.md` als Verweis für Claude Code), `docs/agents/` und die Einführung „Mit Claudian arbeiten“ an, ordnet Anhänge künftig je Notiz in eigene Ordner unter `Attachments/` und setzt Symbole für Ordner und Notizen. Fragt Obsidian, ob es dem Vault vertrauen soll, bitte die Person, „Vertrauen“ zu klicken. Liegen im Vault schon lose Bilder oder PDFs (z. B. „Pasted image …“ direkt in `Attachments/` oder im Vault-Root), biete an, sie einmal aufzuräumen – wie in der `AGENTS.md` des Vaults unter „Aufräumen“ beschrieben.
 
 **Fertig, wenn:** das Skript für jeden Vault mit „Fertig: <Name>“ endet.
 
@@ -113,7 +113,7 @@ Führe die Person Klick für Klick: Google Drive (Symbol in der Menüleiste) →
 `bash "PKG/tools.sh" status` zeigt den Stand:
 
 - **fertig** – weiter mit Schritt 11.
-- **läuft noch** – sag der Person, welches Paket gerade dran ist, und warte mit `bash "PKG/tools.sh" wait 60` höchstens eine Minute am Stück; berichte danach den Stand. Dauert es voraussichtlich noch länger als zehn Minuten, sag der Person, sie soll „weiter“ schreiben, sobald sie Zeit hat, und beende deine Antwort.
+- **läuft noch** – sag der Person, welches Paket gerade dran ist, und warte wie unter „Arbeitsweise“ beschrieben (`tools.sh wait 60`).
 - **Fehler** – erklär die letzten Zeilen in einfachen Worten; meist hilft ein erneutes `tools.sh start` (bereits Installiertes wird übersprungen).
 
 **Fertig, wenn:** `tools.sh status` „fertig installiert“ meldet, `brew bundle check --file "PKG/Brewfile"` alles als installiert zeigt und `brew autoupdate status` einen laufenden Job meldet.

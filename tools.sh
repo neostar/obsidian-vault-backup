@@ -10,8 +10,9 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-STATE="$HOME/Library/Logs/obsidian-vault-setup-tools"
-LOG="$STATE.log" RC="$STATE.rc" PIDF="$STATE.pid"
+# shellcheck source=lib/bg.sh
+source "$HERE/lib/bg.sh"
+bg_init tools
 
 BREW="${OVS_BREW:-}"   # OVS_BREW nur für Tests
 for b in /opt/homebrew/bin/brew /usr/local/bin/brew; do
@@ -19,67 +20,34 @@ for b in /opt/homebrew/bin/brew /usr/local/bin/brew; do
   [[ -x "$b" ]] && { BREW="$b"; break; }
 done
 
-running() {
-  local pid=""
-  [[ -f "$PIDF" ]] && pid="$(cat "$PIDF" || true)"
-  [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null
-}
-
-# Letzte aussagekräftige Zeile des Logs, z. B. „Installing pandoc“
-current() {
-  local line
-  line="$(grep -E '^(Installing|Upgrading|Using|Fetching|==> (Fetching|Pouring|Downloading))' "$LOG" 2>/dev/null | tail -1 || true)"
-  printf '%s' "${line:-startet …}"
-}
-
-status() {
-  if [[ -f "$RC" ]]; then
-    local rc
-    rc="$(cat "$RC" || true)"
-    if [[ "$rc" == "0" ]]; then
-      echo "✅ Werkzeuge fertig installiert."
-      return 0
-    fi
-    echo "❌ Installation mit Fehler beendet. Letzte Zeilen aus $LOG:"
-    tail -20 "$LOG"
-    return 1
-  fi
-  if running; then
-    local n total now
-    n="$(grep -cE '^(Installing|Using|Upgrading) ' "$LOG" 2>/dev/null || true)"
-    total="$(grep -c '^brew ' "$HERE/Brewfile" || true)"
-    now="$(current)"
-    echo "⏳ Läuft noch – $now (${n:-0} von $total Paketen erledigt)"
-    return 3
-  fi
-  echo "Nicht gestartet (oder abgebrochen). Starten mit: bash \"$HERE/tools.sh\" start"
-  return 4
+report() {
+  local st=0 n total now
+  bg_state || st=$?
+  case "$st" in
+    0) echo "✅ Werkzeuge fertig installiert." ;;
+    1) echo "❌ Installation mit Fehler beendet. Letzte Zeilen aus $BG_LOG:"; tail -20 "$BG_LOG" ;;
+    3)
+      n="$(grep -cE '^(Installing|Using|Upgrading) ' "$BG_LOG" 2>/dev/null || true)"
+      total="$(grep -c '^brew ' "$HERE/Brewfile" || true)"
+      now="$(grep -E '^(Installing|Upgrading|Using|==> (Fetching|Pouring|Downloading))' "$BG_LOG" 2>/dev/null | tail -1 || true)"
+      echo "⏳ Läuft noch – ${now:-startet …} (${n:-0} von $total Paketen erledigt)" ;;
+    *) echo "Nicht gestartet (oder abgebrochen). Starten mit: bash \"$HERE/tools.sh\" start" ;;
+  esac
+  return "$st"
 }
 
 case "${1:-status}" in
   start)
     [[ -n "$BREW" ]] || { echo "❌ Homebrew fehlt – erst setup-homebrew.sh im Terminal ausführen." >&2; exit 1; }
-    if running; then status || true; exit 0; fi
-    rm -f "$RC"
-    # set -m: eigener Prozessgruppe – so beendet das Agent-Werkzeug die Installation
-    # nicht, wenn es den aufrufenden Befehl abschließt.
-    set -m
-    # shellcheck disable=SC2016  # $1…$3 expandiert erst die neue Shell
-    nohup /bin/bash -c '
-      "$1" bundle --file "$2"; rc=$?
-      if [ "$rc" -eq 0 ]; then
-        "$1" autoupdate start 1d --upgrade --cleanup --leaves-only || true
-      fi
-      echo "$rc" >"$3"' _ "$BREW" "$HERE/Brewfile" "$RC" >"$LOG" 2>&1 </dev/null &
-    echo $! >"$PIDF"
-    set +m
-    echo "⏳ Installation läuft im Hintergrund (Protokoll: $LOG)."
+    if bg_running; then report || true; exit 0; fi
+    bg_start "$HERE/tools.sh" _run "$BREW"
+    echo "⏳ Installation läuft im Hintergrund (Protokoll: $BG_LOG)."
     ;;
-  status) status ;;
-  wait)
-    end=$((SECONDS + ${2:-60}))
-    while [[ ! -f "$RC" ]] && running && ((SECONDS < end)); do sleep 5; done
-    status
+  _run)   # der eigentliche Auftrag, läuft im Hintergrund
+    "$2" bundle --file "$HERE/Brewfile"
+    "$2" autoupdate start 1d --upgrade --cleanup --leaves-only || true
     ;;
+  status) report ;;
+  wait) bg_wait "${2:-60}" || true; report ;;
   *) echo "Verwendung: $0 start | status | wait [Sekunden]" >&2; exit 2 ;;
 esac
